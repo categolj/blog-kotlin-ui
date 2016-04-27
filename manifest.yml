@@ -1,0 +1,17 @@
+---
+applications:
+  - name: blog-ui
+    memory: 1G
+    instances: 2
+    path: target/blog-kotlin-ui.jar
+    buildpack: java_buildpack_offline
+    domains:
+      - ik.am
+      - pezapp.io
+    host: blog
+    env:
+      blog.api.url: https://blog-api
+      CF_TARGET: https://api.run.pez.pivotal.io
+    services:
+      - eureka-service
+      - blog-ui-log

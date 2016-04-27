@@ -1,0 +1,54 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+</head>
+<body>
+<div layout:fragment="content">
+    <h2 class="subtitle is-4" th:if="${param.q != null}" th:inline="text">Search for [[${param.q[0]}]]...</h2>
+    <div>
+        <article class="card is-fullwidth" th:each="entry : ${page.content}">
+            <header class="card-header">
+                <p class="card-header-title">
+                    <a th:href="@{'/entries/' + ${entry.entryId}}" th:text="${entry.frontMatter.title}">Hello</a>
+                </p>
+            </header>
+            <div class="card-content">
+                <div class="content">
+                    <p class="article-meta" th:inline="text">updated at [[${entry.updated.date}]] by
+                        <a th:href="@{'/users/' + ${entry.updated.name} + '/entries?updated'}"
+                           th:text="${entry.updated.name}"></a>
+                        created at [[${entry.created.date}]] by
+                        <a th:href="@{'/users/' + ${entry.created.name} + '/entries'}"
+                           th:text="${entry.created.name}"></a><br/>
+                        category: <span
+                                th:utext="${@categoriesRenderer.render(entry.frontMatter.categories)}"></span><br/>
+                        tags: <span th:utext="${@tagRenderer.render(entry.frontMatter.tags)}"></span>
+                    </p>
+                    <p class="control has-addons">
+                        <a class="button"
+                           th:href="${'https://github.com/making/blog.ik.am/edit/master/content/' + #numbers.formatInteger(entry.entryId, 5, 'NONE') + '.md'}">Edit</a>
+                        <a class="button"
+                           th:href="${'https://github.com/making/blog.ik.am/commits/master/content/' + #numbers.formatInteger(entry.entryId, 5, 'NONE') + '.md'}">History</a>
+                    </p>
+                    <p>
+                        <button class="button is-info"
+                                th:onclick="'javascript:loadContent(this, ' + ${entry.entryId} + ');'">Read this article
+                        </button>
+                    </p>
+                </div>
+            </div>
+            <hr/>
+        </article>
+    </div>
+    <div>
+        <ul class="pagination" th:utext="${@paginationRenderer.render(page)}">
+        </ul>
+    </div>
+    <script th:src="@{/highlight/highlight.pack.js}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+    <script th:src="@{/superagent.js}"></script>
+    <script th:src="@{/app.js}"></script>
+</div>
+</body>
+</html>

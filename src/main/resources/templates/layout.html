@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+<head>
+    <meta charset="UTF-8"/>
+    <title>BLOG.iK.AM</title>
+    <script>
+        if (location.hash) {
+            // redirect for old paths
+            var path = location.hash.replace('#', '');
+            if (path.charAt(0) == '/') path = path.substr(1);
+            if (path.lastIndexOf('entries', 0) == 0 /* startsWith('entries') */) location.href = path;
+        }
+    </script>
+    <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.0.17/css/bulma.min.css"/>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" th:href="@{/highlight/styles/github.css}"/>
+    <link rel="apple-touch-icon" sizes="57x57" th:href="@{/apple-icon-57x57.png}"/>
+    <link rel="apple-touch-icon" sizes="60x60" th:href="@{/apple-icon-60x60.png}"/>
+    <link rel="apple-touch-icon" sizes="72x72" th:href="@{/apple-icon-72x72.png}"/>
+    <link rel="apple-touch-icon" sizes="76x76" th:href="@{/apple-icon-76x76.png}"/>
+    <link rel="apple-touch-icon" sizes="114x114" th:href="@{/apple-icon-114x114.png}"/>
+    <link rel="apple-touch-icon" sizes="120x120" th:href="@{/apple-icon-120x120.png}"/>
+    <link rel="apple-touch-icon" sizes="144x144" th:href="@{/apple-icon-144x144.png}"/>
+    <link rel="apple-touch-icon" sizes="152x152" th:href="@{/apple-icon-152x152.png}"/>
+    <link rel="apple-touch-icon" sizes="180x180" th:href="@{/apple-icon-180x180.png}"/>
+    <link rel="icon" type="image/png" sizes="192x192" th:href="@{/android-icon-192x192.png}"/>
+    <link rel="icon" type="image/png" sizes="32x32" th:href="@{/favicon-32x32.png}"/>
+    <link rel="icon" type="image/png" sizes="96x96" th:href="@{/favicon-96x96.png}"/>
+    <link rel="icon" type="image/png" sizes="16x16" th:href="@{/favicon-16x16.png}"/>
+    <link rel="manifest" th:href="@{/manifest.json}"/>
+    <meta name="msapplication-TileColor" content="#ffffff"/>
+    <meta name="msapplication-TileImage" th:content="@{/ms-icon-144x144.png}"/>
+    <meta name="theme-color" content="#ffffff"/>
+    <link rel="alternate" type="application/rss+xml" title="BLOG.IK.AM" href="https://feed.ik.am"/>
+</head>
+<body>
+
+<header class="header">
+    <div class="container">
+        <div class="header-left">
+            <a class="header-item title" th:href="@{/}">
+                BLOG.IK.AM
+            </a>
+        </div>
+    </div>
+</header>
+<br/>
+<div class="container">
+    <section>
+        <p><a href="https://twitter.com/making">@making</a>'s memo</p>
+
+        <form method="get" th:action="@{/}">
+            <p class="control has-icon has-icon-right" style="width: 50%">
+                <input class="input" name="q" type="search"
+                       placeholder="Search..."
+                       th:value="${param.q != null ? param.q[0] : ''}"/>
+                <i class="fa fa-search"></i>
+            </p>
+            <p>
+                <a th:href="@{/categories}" class="button is-small is-primary">All Categories</a>
+                <a th:href="@{/tags}" class="button is-small is-primary">All Tags</a>
+            </p>
+        </form>
+    </section>
+    <br/>
+    <section id="main">
+        <div layout:fragment="content">Fake</div>
+    </section>
+    <hr/>
+    <aside>
+        <section id="links">
+            <h3 class="subtitle is-4">Links</h3>
+            <ul>
+                <li><i class="fa fa-amazon"></i>&nbsp;<a href="http://bit.ly/hajiboot">はじめてのSpring Boot (書きました)</a></li>
+                <li><i class="fa fa-amazon"></i>&nbsp;<a href="http://amzn.to/hajiboo">はじめてのBootstrap (書きました)</a></li>
+                <li><i class="fa fa-github"></i>&nbsp;<a href="https://github.com/making">Github</a></li>
+                <li><i class="fa fa-twitter"></i>&nbsp;<a href="https://twitter.com/making">Twitter</a></li>
+                <li><i class="fa fa-pencil"></i>&nbsp;<a href="http://qiita.com/making@github">Qiita</a></li>
+                <li><i class="fa fa-slideshare"></i>&nbsp;<a href="http://www.slideshare.net/makingx">SlideShare</a></li>
+                <li><i class="fa fa-amazon"></i>&nbsp;<a href="http://amzn.to/JavaEE6">Beginning Java EE 6 GlassFish 3で始めるエンタープライズJava (一部翻訳しました)</a></li>
+            </ul>
+        </section>
+    </aside>
+    <footer class="footer">
+        <div class="container">
+            <div class="content is-centered">
+                <p>
+                    Powered by <a href="https://github.com/categolj/categolj3-api">CategoLJ3</a>
+                </p>
+                <p>
+                    <a class="icon" href="https://github.com/making/blog-services">
+                        <i class="fa fa-github"></i>
+                    </a>
+                </p>
+            </div>
+        </div>
+    </footer>
+</div>
+</body>
+</html>

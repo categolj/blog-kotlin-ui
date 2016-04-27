@@ -1,0 +1,19 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title>Error...</title>
+</head>
+<body>
+<div layout:fragment="content">
+    <div class="message is-danger">
+        <div class="message-header">
+            Connection Error ...
+        </div>
+        <div class="message-body">
+            Please <a th:href="@{/}">re-visit</a> after a few minutes.
+        </div>
+    </div>
+</div>
+</body>
+</html>
