@@ -1,0 +1,72 @@
+---
+resources:
+  - name: blog-kotlin-ui-repo
+    type: git
+    source:
+      uri: https://github.com/categolj/blog-kotlin-ui
+      branch: master
+  - name: cf
+    type: cf
+    source:
+      api: {{cf-api}}
+      username: {{cf-username}}
+      password: {{cf-password}}
+      organization: {{cf-org}}
+      space: {{cf-space}}
+      skip_cert_check: true
+  - name: m2
+    type: docker-image
+    source:
+      repository: {{docker-repo}}
+
+jobs:
+  - name: blog-kotlin-ui-unit
+    plan:
+      - get: blog-kotlin-ui-repo
+        trigger: true
+      - get: m2
+      - task: unit
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: java
+              tag: 8-jdk-alpine 
+          inputs:
+            - name: blog-kotlin-ui-repo
+              path: repo
+            - name: m2  
+          run:
+            path: sh
+            args: 
+            - repo/ci/tasks/unit.sh
+  - name: blog-kotlin-ui-deploy
+    plan:
+      - get: blog-kotlin-ui-repo
+        trigger: true
+        passed: [ blog-kotlin-ui-unit ]
+      - get: m2
+      - task: package
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: java
+              tag: 8-jdk-alpine 
+          inputs:
+            - name: blog-kotlin-ui-repo
+              path: repo
+            - name: m2 
+          outputs:
+            - name: output 
+          run:
+            path: sh
+            args: 
+            - repo/ci/tasks/package.sh
+      - put: cf
+        params:
+          manifest: blog-kotlin-ui-repo/manifest.yml
+          path: output/app.jar
+          current_app_name: blog-ui
