@@ -70,3 +70,21 @@ jobs:
           manifest: blog-kotlin-ui-repo/manifest.yml
           path: output/app.jar
           current_app_name: blog-ui
+
+  - name: graphite-create-service
+    plan:
+      - task: create-service
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: governmentpaas/cf-cli
+          run:
+            path: sh
+            args:
+            - -c
+            - |
+              cred='{"uri":"'{{graphite-url}}'","port":{{graphite-port}},"apikey":"'{{graphite-apikey}}'"}'
+              cf login -a {{cf-api}} -u {{cf-username}} -p {{cf-password}} -o {{cf-org}} -s {{cf-space}}
+              cf create-user-provided-service hostedgraphite -p $cred
