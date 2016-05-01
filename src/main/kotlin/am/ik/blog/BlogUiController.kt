@@ -123,7 +123,7 @@ class BlogUiController @Autowired constructor(val blogClient: BlogClient, val ma
 
 
 @Component
-open class BlogClient @Autowired constructor(val restTemplate: RestTemplate,
+open class BlogClient @Autowired constructor(val restTemplate: RestTemplate, val accessCounter: AccessCounter,
                                              @Value("\${blog.api.url:http://localhost:8080}") val apiUrl: String) {
     val typeReference = object : ParameterizedTypeReference<Page>() {}
 
@@ -171,6 +171,7 @@ open class BlogClient @Autowired constructor(val restTemplate: RestTemplate,
         val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
                 .pathSegment("api", "entries", entryId.toString())
                 .build()
+        accessCounter.countEntry(entryId)
         return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, Entry::class.java).body
     }
 
