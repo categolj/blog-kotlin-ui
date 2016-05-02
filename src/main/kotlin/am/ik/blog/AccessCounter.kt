@@ -6,5 +6,5 @@ import org.springframework.stereotype.Component
 
 @Component
 class AccessCounter @Autowired constructor(val counterService: CounterService) {
-    open fun countEntry(entryId: Long) = counterService.increment("blog.entry." + entryId)
+    fun countEntry(entryId: Long) = counterService.increment("blog.entry." + entryId)
 }
