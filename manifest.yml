@@ -10,7 +10,6 @@ applications:
       - pezapp.io
     host: blog
     env:
-      blog.api.url: https://blog-api
       CF_TARGET: https://api.run.pez.pivotal.io
     services:
       - config-service
