@@ -26,13 +26,13 @@ jobs:
         trigger: true
       - get: m2
       - task: unit
+        privileged: true
         config:
           platform: linux
           image_resource:
             type: docker-image
             source:
-              repository: java
-              tag: 8-jdk-alpine 
+              repository: making/docker-selenium-jdk-firefox
           inputs:
             - name: blog-kotlin-ui-repo
               path: repo
@@ -40,7 +40,7 @@ jobs:
           run:
             path: sh
             args: 
-            - repo/ci/tasks/unit.sh
+            - repo/ci/tasks/selenium.sh
   - name: blog-kotlin-ui-deploy
     plan:
       - get: blog-kotlin-ui-repo
