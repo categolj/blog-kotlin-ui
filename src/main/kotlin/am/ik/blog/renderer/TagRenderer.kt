@@ -10,7 +10,7 @@ class TagRenderer {
         val builder = ServletUriComponentsBuilder.fromCurrentContextPath()
         return tags.map {
             """
-            <span class="button is-primary is-outlined is-small">
+            <span class="button is-primary is-outlined is-small tag">
                 <a href="${builder.replacePath("/tags/{tag}/entries").buildAndExpand(it)}">$it</a>
             </span>
              """
@@ -21,7 +21,7 @@ class TagRenderer {
         val builder = ServletUriComponentsBuilder.fromCurrentContextPath()
         return """
         <i class="fa fa-circle"></i>&nbsp;
-        <span class="button is-primary is-outlined is-small">
+        <span class="button is-primary is-outlined is-small tag">
             <a href="${builder.replacePath("/tags/{tag}/entries").buildAndExpand(tag)}">$tag</a>
         </span>
         """
