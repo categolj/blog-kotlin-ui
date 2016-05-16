@@ -70,7 +70,7 @@ jobs:
           manifest: blog-kotlin-ui-repo/manifest.yml
           path: output/app.jar
           current_app_name: blog-ui
-  - name: blog-kotlin-ui-deploy
+  - name: blog-kotlin-ui-deploy-scs
     plan:
       - get: blog-kotlin-ui-repo
         trigger: true
