@@ -1,0 +1,20 @@
+---
+applications:
+  - name: blog-ui
+    memory: 1G
+    instances: 2
+    path: target/blog-kotlin-ui.jar
+    buildpack: java_buildpack_offline
+    domains:
+      - ik.am
+      - pezapp.io
+    host: blog
+    env:
+      CF_TARGET: https://api.run.pez.pivotal.io
+      SPRING_PROFILES_ACTIVE: scs
+    services:
+      - p-config-service
+      - p-eureka-service
+      - p-hystrix-dashboard-service
+      - blog-ui-log
+      - hostedgraphite

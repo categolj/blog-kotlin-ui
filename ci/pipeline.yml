@@ -44,7 +44,7 @@ jobs:
   - name: blog-kotlin-ui-deploy
     plan:
       - get: blog-kotlin-ui-repo
-        trigger: true
+        # trigger: true
         passed: [ blog-kotlin-ui-unit ]
       - get: m2
       - task: package
@@ -68,6 +68,35 @@ jobs:
       - put: cf
         params:
           manifest: blog-kotlin-ui-repo/manifest.yml
+          path: output/app.jar
+          current_app_name: blog-ui
+  - name: blog-kotlin-ui-deploy
+    plan:
+      - get: blog-kotlin-ui-repo
+        trigger: true
+        passed: [ blog-kotlin-ui-unit ]
+      - get: m2
+      - task: package
+        config:
+          platform: linux
+          image_resource:
+            type: docker-image
+            source:
+              repository: java
+              tag: 8-jdk-alpine
+          inputs:
+            - name: blog-kotlin-ui-repo
+              path: repo
+            - name: m2
+          outputs:
+            - name: output
+          run:
+            path: sh
+            args:
+            - repo/ci/tasks/package.sh
+      - put: cf
+        params:
+          manifest: blog-kotlin-ui-repo/manifest-scs.yml
           path: output/app.jar
           current_app_name: blog-ui
 

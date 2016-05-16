@@ -49,13 +49,14 @@ open class BlogKotlinUiApplication {
     }
 }
 
-@Configuration
-@Profile("!no-ribbon")
-open class RestTemplateConfig {
-    @LoadBalanced
-    @Bean
-    open fun restTemplate() = RestTemplate()
-}
+// why?
+//@Configuration
+//@Profile("!no-ribbon")
+//open class RestTemplateConfig {
+//    @LoadBalanced
+//    @Bean
+//    open fun restTemplate() = RestTemplate()
+//}
 
 @Configuration
 @Profile("no-ribbon") // for stand-alone dev
