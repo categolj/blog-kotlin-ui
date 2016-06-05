@@ -1,28 +1,18 @@
 package am.ik.blog
 
 import am.ik.marked4j.Marked
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty
 import org.slf4j.LoggerFactory
 
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.core.ParameterizedTypeReference
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpMethod
 import org.springframework.http.HttpStatus
-import org.springframework.stereotype.Component
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
 import org.springframework.web.client.HttpServerErrorException
 import org.springframework.web.client.ResourceAccessException
-import org.springframework.web.client.RestTemplate
-import org.springframework.web.util.UriComponentsBuilder
-
-import java.time.OffsetDateTime
 
 
 @Controller
