@@ -8,12 +8,10 @@ import org.springframework.core.ParameterizedTypeReference
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
-import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.time.OffsetDateTime
 
-@Component
 open class CategoLJ3Client @Autowired constructor(val restTemplate: RestTemplate, val accessCounter: AccessCounter,
                                                   @Value("\${blog.api.url:http://localhost:8080}") val apiUrl: String) {
     val typeReference = object : ParameterizedTypeReference<Page>() {}
@@ -24,9 +22,9 @@ open class CategoLJ3Client @Autowired constructor(val restTemplate: RestTemplate
             created = Author(name = "system", date = OffsetDateTime.now()),
             updated = Author(name = "system", date = OffsetDateTime.now()))
 
-    fun fallbackPage(@Suppress("UNUSED_PARAMETER") pageable: Pageable) = Page(content = listOf(fallbackEntry(0)), isFirst = true, isLast = true, number = 1, numberOfElements = 1, totalElements = 1, totalPages = 1, size = 1)
+    fun fallbackPage(@Suppress("UNUSED_PARAMETER") pageable: Pageable, @Suppress("UNUSED_PARAMETER") excludeContent: Boolean) = Page(content = listOf(fallbackEntry(0)), isFirst = true, isLast = true, number = 1, numberOfElements = 1, totalElements = 1, totalPages = 1, size = 1)
 
-    fun fallbackPage(@Suppress("UNUSED_PARAMETER") dummy: String, pageable: Pageable) = fallbackPage(pageable)
+    fun fallbackPage(@Suppress("UNUSED_PARAMETER") dummy: String, pageable: Pageable) = fallbackPage(pageable, true)
 
     fun fallbackTags() = listOf("Service", "is", "unavailable", "now")
 
@@ -34,12 +32,12 @@ open class CategoLJ3Client @Autowired constructor(val restTemplate: RestTemplate
 
     @HystrixCommand(fallbackMethod = "fallbackPage",
             commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
-    open fun findAll(pageable: Pageable): Page {
+    open fun findAll(pageable: Pageable, excludeContent: Boolean = true): Page {
         val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
                 .pathSegment("api", "entries")
                 .queryParam("page", pageable.pageNumber)
                 .queryParam("size", pageable.pageSize)
-                .queryParam("excludeContent", true)
+                .queryParam("excludeContent", excludeContent)
                 .build()
         return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, typeReference).body
     }

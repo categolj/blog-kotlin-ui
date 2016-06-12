@@ -47,6 +47,18 @@ open class BlogKotlinUiApplication {
     open fun redisMetricWriter(export: MetricExportProperties, connectionFactory: RedisConnectionFactory): RedisMetricRepository {
         return RedisMetricRepository(connectionFactory, export.redis.prefix, export.redis.key);
     }
+
+    @Bean
+    open fun blogClient(restTemplate: RestTemplate, accessCounter: AccessCounter,
+                        @Value("\${blog.api.url:http://localhost:8080}") apiUrl: String): CategoLJ3Client {
+        return CategoLJ3Client(restTemplate, accessCounter, apiUrl)
+    }
+
+    @Bean
+    open fun thisWeekInMakingClient(restTemplate: RestTemplate, accessCounter: AccessCounter,
+                                    @Value("\${blog.this-week-in-making.url:http://localhost:9832}") apiUrl: String): CategoLJ3Client {
+        return CategoLJ3Client(restTemplate, accessCounter, apiUrl)
+    }
 }
 
 // why?

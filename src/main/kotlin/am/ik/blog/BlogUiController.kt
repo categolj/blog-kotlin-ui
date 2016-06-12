@@ -4,6 +4,7 @@ import am.ik.marked4j.Marked
 import org.slf4j.LoggerFactory
 
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.beans.factory.annotation.Qualifier
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
@@ -16,7 +17,7 @@ import org.springframework.web.client.ResourceAccessException
 
 
 @Controller
-class BlogUiController @Autowired constructor(val categoLJ3Client: CategoLJ3Client, val marked: Marked,
+class BlogUiController @Autowired constructor(@Qualifier("blogClient") val categoLJ3Client: CategoLJ3Client, val marked: Marked,
                                               @Value("\${blog.api.url:http://localhost:8080}") val apiUrl: String) {
     val log = LoggerFactory.getLogger(BlogUiController::class.java)
 
