@@ -37,7 +37,7 @@
                 </p>
 
                 <div class="notification is-warning" th:if="${@obsoleteChecker.isWarning(entry)}">
-                    本記事は最終更新日から1年以上経過しておr、内容が古い可能性があります。注意して読んでください。
+                    本記事は最終更新日から1年以上経過しており、内容が古い可能性があります。注意して読んでください。
                 </div>
 
                 <div class="notification is-danger" th:if="${@obsoleteChecker.isDanger(entry)}">
