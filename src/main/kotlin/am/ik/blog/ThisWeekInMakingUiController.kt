@@ -22,7 +22,7 @@ class ThisWeekInMakingUiController @Autowired constructor(@Qualifier("thisWeekIn
     val log = LoggerFactory.getLogger(BlogUiController::class.java)
 
     @RequestMapping("/this-week-in-making")
-    fun view(model: Model, @PageableDefault(size = 5) pageable: Pageable): String {
+    fun view(model: Model, @PageableDefault(size = 10) pageable: Pageable): String {
         val entries = categoLJ3Client.findAll(pageable)
         model.addAttribute("page", entries)
         return "this-week-in-making-list"
