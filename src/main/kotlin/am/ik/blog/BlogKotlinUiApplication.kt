@@ -35,12 +35,6 @@ open class BlogKotlinUiApplication {
                         @Value("\${blog.api.url:http://localhost:8080}") apiUrl: String): CategoLJ3Client {
         return CategoLJ3Client(restTemplate, accessCounter, apiUrl)
     }
-
-    @Bean
-    open fun thisWeekInMakingClient(restTemplate: RestTemplate, accessCounter: AccessCounter,
-                                    @Value("\${blog.this-week-in-making.url:http://localhost:9832}") apiUrl: String): CategoLJ3Client {
-        return CategoLJ3Client(restTemplate, accessCounter, apiUrl)
-    }
 }
 
 // why?
