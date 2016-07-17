@@ -16,5 +16,4 @@ applications:
       - p-config-service
       - p-eureka-service
       - p-hystrix-dashboard-service
-      - blog-ui-log
-      - hostedgraphite
+      - blog-logstash
