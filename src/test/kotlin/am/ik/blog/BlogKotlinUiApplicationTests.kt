@@ -22,6 +22,9 @@ import com.codeborne.selenide.Selenide.*
 class BlogKotlinUiApplicationTests {
     @Value("\${local.server.port}")
     var port: Int = 0
+    @Value("\${WAIT_MILLIS:0}")
+    var waitMillis: Long = 0
+
 
     @Before
     fun setup() {
@@ -32,7 +35,7 @@ class BlogKotlinUiApplicationTests {
     fun checkTopPage() {
         val topPage = open("/", TopPage::class.java)
         val articles = topPage.articles
-        Thread.sleep(500)
+        Thread.sleep(waitMillis)
         articles[0].title.shouldBe(text("Hello Spring Boot"))
         articles[0].tags[0].shouldHave(text("Java"))
         articles[0].tags[1].shouldHave(text("Spring"))
@@ -50,7 +53,7 @@ class BlogKotlinUiApplicationTests {
     fun checkEntryPage() {
         val entryPage = open("/entries/1", EntryPage::class.java)
         val article = entryPage.article
-        Thread.sleep(500)
+        if (waitMillis > 0) Thread.sleep(waitMillis)
         article.title.shouldBe(text("Hello Java8"))
         article.tags[0].shouldHave(text("Java"))
         article.tags[1].shouldHave(text("Java8"))
@@ -61,7 +64,7 @@ class BlogKotlinUiApplicationTests {
     fun checkTagsPage() {
         val tagPage = open("/tags", TagsPage::class.java)
         val tags = tagPage.tags
-        Thread.sleep(500)
+        Thread.sleep(waitMillis)
         tags[0].shouldHave(text("Java"))
         tags[1].shouldHave(text("Java8"))
         tags[2].shouldHave(text("Spring"))
