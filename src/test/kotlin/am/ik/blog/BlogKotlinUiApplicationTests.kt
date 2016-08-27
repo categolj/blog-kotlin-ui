@@ -14,6 +14,7 @@ import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
 import com.codeborne.selenide.Condition.*
 import com.codeborne.selenide.Selenide.*
+import org.junit.Ignore
 
 @RunWith(SpringJUnit4ClassRunner::class)
 @SpringApplicationConfiguration(classes = arrayOf(BlogKotlinUiApplication::class))
@@ -32,6 +33,7 @@ class BlogKotlinUiApplicationTests {
     }
 
     @Test
+    @Ignore
     fun checkTopPage() {
         val topPage = open("/", TopPage::class.java)
         val articles = topPage.articles
