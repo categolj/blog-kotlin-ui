@@ -20,6 +20,7 @@ import org.junit.Ignore
 @SpringApplicationConfiguration(classes = arrayOf(BlogKotlinUiApplication::class))
 @WebIntegrationTest(randomPort = true)
 @ActiveProfiles("no-graphite")
+@Ignore
 class BlogKotlinUiApplicationTests {
     @Value("\${local.server.port}")
     var port: Int = 0
@@ -33,7 +34,6 @@ class BlogKotlinUiApplicationTests {
     }
 
     @Test
-    @Ignore
     fun checkTopPage() {
         val topPage = open("/", TopPage::class.java)
         val articles = topPage.articles
