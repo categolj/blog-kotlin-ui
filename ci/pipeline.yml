@@ -28,6 +28,8 @@ jobs:
       - task: unit
         privileged: true
         config:
+          params:
+            WAIT_MILLS: 3000
           platform: linux
           image_resource:
             type: docker-image
