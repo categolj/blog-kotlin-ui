@@ -35,7 +35,7 @@ class BlogKotlinUiApplicationTests {
     fun checkTopPage() {
         val topPage = open("/", TopPage::class.java)
         val articles = topPage.articles
-        Thread.sleep(waitMillis)
+        if (waitMillis > 0) Thread.sleep(waitMillis)
         articles[0].title.shouldBe(text("Hello Spring Boot"))
         articles[0].tags[0].shouldHave(text("Java"))
         articles[0].tags[1].shouldHave(text("Spring"))
@@ -64,7 +64,7 @@ class BlogKotlinUiApplicationTests {
     fun checkTagsPage() {
         val tagPage = open("/tags", TagsPage::class.java)
         val tags = tagPage.tags
-        Thread.sleep(waitMillis)
+        if (waitMillis > 0) Thread.sleep(waitMillis)
         tags[0].shouldHave(text("Java"))
         tags[1].shouldHave(text("Java8"))
         tags[2].shouldHave(text("Spring"))
