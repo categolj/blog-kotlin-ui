@@ -36,17 +36,17 @@ class BlogKotlinUiApplicationTests {
         val topPage = open("/", TopPage::class.java)
         val articles = topPage.articles
         if (waitMillis > 0) Thread.sleep(waitMillis)
-        articles[0].title.shouldBe(text("Hello Spring Boot"))
         articles[0].tags[0].shouldHave(text("Java"))
         articles[0].tags[1].shouldHave(text("Spring"))
         articles[0].tags[2].shouldHave(text("SpringBoot"))
         articles[0].read().shouldHave(text("Spring Boot!"))
+        articles[0].title.shouldBe(text("Hello Spring Boot"))
 
-        articles[1].title.shouldBe(text("Hello Java8"))
         articles[1].tags[0].shouldHave(text("Java"))
         articles[1].tags[1].shouldHave(text("Java8"))
         articles[1].tags[2].shouldHave(text("Stream"))
         articles[1].read().shouldHave(text("Java8!"))
+        articles[1].title.shouldBe(text("Hello Java8"))
     }
 
     @Test
@@ -54,10 +54,10 @@ class BlogKotlinUiApplicationTests {
         val entryPage = open("/entries/1", EntryPage::class.java)
         val article = entryPage.article
         if (waitMillis > 0) Thread.sleep(waitMillis)
-        article.title.shouldBe(text("Hello Java8"))
         article.tags[0].shouldHave(text("Java"))
         article.tags[1].shouldHave(text("Java8"))
         article.tags[2].shouldHave(text("Stream"))
+        article.title.shouldBe(text("Hello Java8"))
     }
 
     @Test
