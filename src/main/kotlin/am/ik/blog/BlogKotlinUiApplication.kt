@@ -37,7 +37,6 @@ open class BlogKotlinUiApplication {
     }
 }
 
-// why?
 @Configuration
 @Profile("!no-ribbon")
 open class RestTemplateConfig {
