@@ -13,8 +13,8 @@ applications:
       TRUST_CERTS: api.run.pez.pivotal.io
       SPRING_PROFILES_ACTIVE: scs
     services:
-      - blog-config-server
-      - blog-eureka
-      - blog-hystrix-dashboard
+      - config-service
+      - eureka-service
+      - hystrix-dashboard-service
       - blog-shared-redis
       - blog-logstash
