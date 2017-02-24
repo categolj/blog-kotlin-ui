@@ -10,7 +10,7 @@ applications:
       - pezapp.io
     host: blog
     env:
-      TRUST_CERTS: https://api.run.pez.pivotal.io
+      TRUST_CERTS: api.run.pez.pivotal.io
       SPRING_PROFILES_ACTIVE: scs
     services:
       - config-service
