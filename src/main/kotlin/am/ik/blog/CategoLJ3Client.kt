@@ -7,10 +7,12 @@ import org.springframework.core.ParameterizedTypeReference
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpEntity
 import org.springframework.http.HttpMethod
+import org.springframework.stereotype.Component
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.time.OffsetDateTime
 
+@Component
 class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessCounter,
                       @Value("\${blog.api.url:http://localhost:8080}") val apiUrl: String) {
     val typeReference = object : ParameterizedTypeReference<Page>() {}

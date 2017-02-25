@@ -1,7 +1,6 @@
 package am.ik.blog
 
 import am.ik.marked4j.MarkedBuilder
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.boot.SpringApplication
 import org.springframework.boot.actuate.autoconfigure.ExportMetricWriter
 import org.springframework.boot.actuate.metrics.export.MetricExportProperties
@@ -28,12 +27,6 @@ class BlogKotlinUiApplication {
     @ExportMetricWriter
     fun redisMetricWriter(export: MetricExportProperties, connectionFactory: RedisConnectionFactory): RedisMetricRepository {
         return RedisMetricRepository(connectionFactory, export.redis.prefix, export.redis.key);
-    }
-
-    @Bean
-    fun blogClient(restTemplate: RestTemplate, accessCounter: AccessCounter,
-                   @Value("\${blog.api.url:http://localhost:8080}") apiUrl: String): CategoLJ3Client {
-        return CategoLJ3Client(restTemplate, accessCounter, apiUrl)
     }
 }
 
