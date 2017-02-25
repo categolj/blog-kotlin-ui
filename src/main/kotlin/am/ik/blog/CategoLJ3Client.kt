@@ -34,7 +34,7 @@ class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessC
     @HystrixCommand(fallbackMethod = "fallbackPage",
             commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
     fun findAll(pageable: Pageable, excludeContent: Boolean = true): Page {
-        val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "entries")
                 .queryParam("page", pageable.pageNumber)
                 .queryParam("size", pageable.pageSize)
@@ -46,7 +46,7 @@ class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessC
     @HystrixCommand(fallbackMethod = "fallbackPage",
             commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
     fun findByQuery(query: String, pageable: Pageable): Page {
-        val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "entries")
                 .queryParam("q", query)
                 .queryParam("page", pageable.pageNumber)
@@ -58,7 +58,7 @@ class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessC
 
     @HystrixCommand(fallbackMethod = "fallbackEntry")
     fun findById(entryId: Long): Entry {
-        val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "entries", entryId.toString())
                 .build()
         accessCounter.countEntry(entryId)
@@ -68,7 +68,7 @@ class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessC
     @HystrixCommand(fallbackMethod = "fallbackPage",
             commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
     fun findByTag(tag: String, pageable: Pageable): Page {
-        val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "tags", tag, "entries")
                 .queryParam("page", pageable.pageNumber)
                 .queryParam("size", pageable.pageSize)
@@ -80,7 +80,7 @@ class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessC
     @HystrixCommand(fallbackMethod = "fallbackPage",
             commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
     fun findByCategories(categories: String, pageable: Pageable): Page {
-        val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "categories", categories, "entries")
                 .queryParam("page", pageable.pageNumber)
                 .queryParam("size", pageable.pageSize)
@@ -92,7 +92,7 @@ class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessC
     @HystrixCommand(fallbackMethod = "fallbackPage",
             commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
     fun findByCreatedBy(name: String, pageable: Pageable): Page {
-        val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "users", name, "entries")
                 .queryParam("page", pageable.pageNumber)
                 .queryParam("size", pageable.pageSize)
@@ -104,7 +104,7 @@ class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessC
     @HystrixCommand(fallbackMethod = "fallbackPage",
             commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
     fun findByUpdatedBy(name: String, pageable: Pageable): Page {
-        val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "users", name, "entries")
                 .queryParam("updated")
                 .queryParam("page", pageable.pageNumber)
@@ -116,7 +116,7 @@ class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessC
 
     @HystrixCommand(fallbackMethod = "fallbackTags")
     fun findTags(): List<String> {
-        val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "tags")
                 .build()
         return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, object : ParameterizedTypeReference<List<String>>() {}).body
@@ -124,7 +124,7 @@ class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessC
 
     @HystrixCommand(fallbackMethod = "fallbackCategories")
     fun findCategories(): List<List<String>> {
-        val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "categories")
                 .build()
         return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, object : ParameterizedTypeReference<List<List<String>>>() {}).body
