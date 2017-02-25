@@ -19,37 +19,37 @@ import org.springframework.web.client.RestTemplate
 @SpringBootApplication
 @EnableDiscoveryClient
 @EnableCircuitBreaker
-open class BlogKotlinUiApplication {
+class BlogKotlinUiApplication {
     @Bean
-    open fun marked() = MarkedBuilder().breaks(true).build()
+    fun marked() = MarkedBuilder().breaks(true).build()
 
     @Bean
     @Profile("cloud")
     @ExportMetricWriter
-    open fun redisMetricWriter(export: MetricExportProperties, connectionFactory: RedisConnectionFactory): RedisMetricRepository {
+    fun redisMetricWriter(export: MetricExportProperties, connectionFactory: RedisConnectionFactory): RedisMetricRepository {
         return RedisMetricRepository(connectionFactory, export.redis.prefix, export.redis.key);
     }
 
     @Bean
-    open fun blogClient(restTemplate: RestTemplate, accessCounter: AccessCounter,
-                        @Value("\${blog.api.url:http://localhost:8080}") apiUrl: String): CategoLJ3Client {
+    fun blogClient(restTemplate: RestTemplate, accessCounter: AccessCounter,
+                   @Value("\${blog.api.url:http://localhost:8080}") apiUrl: String): CategoLJ3Client {
         return CategoLJ3Client(restTemplate, accessCounter, apiUrl)
     }
 }
 
 @Configuration
 @Profile("!no-ribbon")
-open class RestTemplateConfig {
+class RestTemplateConfig {
     @LoadBalanced
     @Bean
-    open fun restTemplate() = RestTemplate()
+    fun restTemplate() = RestTemplate()
 }
 
 @Configuration
 @Profile("no-ribbon") // for stand-alone dev
-open class RestTemplateConfigNoRibbon {
+class RestTemplateConfigNoRibbon {
     @Bean
-    open fun restTemplate() = RestTemplate()
+    fun restTemplate() = RestTemplate()
 }
 
 fun main(args: Array<String>) {

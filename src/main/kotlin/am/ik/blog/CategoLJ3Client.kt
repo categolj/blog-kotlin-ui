@@ -2,7 +2,6 @@ package am.ik.blog
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.data.domain.Pageable
@@ -12,8 +11,8 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.util.UriComponentsBuilder
 import java.time.OffsetDateTime
 
-open class CategoLJ3Client @Autowired constructor(val restTemplate: RestTemplate, val accessCounter: AccessCounter,
-                                                  @Value("\${blog.api.url:http://localhost:8080}") val apiUrl: String) {
+class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessCounter,
+                      @Value("\${blog.api.url:http://localhost:8080}") val apiUrl: String) {
     val typeReference = object : ParameterizedTypeReference<Page>() {}
 
     fun fallbackEntry(entryId: Long) = Entry(entryId = entryId,
@@ -32,7 +31,7 @@ open class CategoLJ3Client @Autowired constructor(val restTemplate: RestTemplate
 
     @HystrixCommand(fallbackMethod = "fallbackPage",
             commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
-    open fun findAll(pageable: Pageable, excludeContent: Boolean = true): Page {
+    fun findAll(pageable: Pageable, excludeContent: Boolean = true): Page {
         val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
                 .pathSegment("api", "entries")
                 .queryParam("page", pageable.pageNumber)
@@ -44,7 +43,7 @@ open class CategoLJ3Client @Autowired constructor(val restTemplate: RestTemplate
 
     @HystrixCommand(fallbackMethod = "fallbackPage",
             commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
-    open fun findByQuery(query: String, pageable: Pageable): Page {
+    fun findByQuery(query: String, pageable: Pageable): Page {
         val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
                 .pathSegment("api", "entries")
                 .queryParam("q", query)
@@ -56,7 +55,7 @@ open class CategoLJ3Client @Autowired constructor(val restTemplate: RestTemplate
     }
 
     @HystrixCommand(fallbackMethod = "fallbackEntry")
-    open fun findById(entryId: Long): Entry {
+    fun findById(entryId: Long): Entry {
         val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
                 .pathSegment("api", "entries", entryId.toString())
                 .build()
@@ -66,7 +65,7 @@ open class CategoLJ3Client @Autowired constructor(val restTemplate: RestTemplate
 
     @HystrixCommand(fallbackMethod = "fallbackPage",
             commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
-    open fun findByTag(tag: String, pageable: Pageable): Page {
+    fun findByTag(tag: String, pageable: Pageable): Page {
         val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
                 .pathSegment("api", "tags", tag, "entries")
                 .queryParam("page", pageable.pageNumber)
@@ -78,7 +77,7 @@ open class CategoLJ3Client @Autowired constructor(val restTemplate: RestTemplate
 
     @HystrixCommand(fallbackMethod = "fallbackPage",
             commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
-    open fun findByCategories(categories: String, pageable: Pageable): Page {
+    fun findByCategories(categories: String, pageable: Pageable): Page {
         val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
                 .pathSegment("api", "categories", categories, "entries")
                 .queryParam("page", pageable.pageNumber)
@@ -90,7 +89,7 @@ open class CategoLJ3Client @Autowired constructor(val restTemplate: RestTemplate
 
     @HystrixCommand(fallbackMethod = "fallbackPage",
             commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
-    open fun findByCreatedBy(name: String, pageable: Pageable): Page {
+    fun findByCreatedBy(name: String, pageable: Pageable): Page {
         val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
                 .pathSegment("api", "users", name, "entries")
                 .queryParam("page", pageable.pageNumber)
@@ -102,7 +101,7 @@ open class CategoLJ3Client @Autowired constructor(val restTemplate: RestTemplate
 
     @HystrixCommand(fallbackMethod = "fallbackPage",
             commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
-    open fun findByUpdatedBy(name: String, pageable: Pageable): Page {
+    fun findByUpdatedBy(name: String, pageable: Pageable): Page {
         val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
                 .pathSegment("api", "users", name, "entries")
                 .queryParam("updated")
@@ -114,7 +113,7 @@ open class CategoLJ3Client @Autowired constructor(val restTemplate: RestTemplate
     }
 
     @HystrixCommand(fallbackMethod = "fallbackTags")
-    open fun findTags(): List<String> {
+    fun findTags(): List<String> {
         val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
                 .pathSegment("api", "tags")
                 .build()
@@ -122,7 +121,7 @@ open class CategoLJ3Client @Autowired constructor(val restTemplate: RestTemplate
     }
 
     @HystrixCommand(fallbackMethod = "fallbackCategories")
-    open fun findCategories(): List<List<String>> {
+    fun findCategories(): List<List<String>> {
         val uri = UriComponentsBuilder.fromHttpUrl(apiUrl)
                 .pathSegment("api", "categories")
                 .build()

@@ -1,6 +1,5 @@
 package am.ik.blog
 
-import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.actuate.autoconfigure.ExportMetricReader
 import org.springframework.boot.actuate.metrics.CounterService
 import org.springframework.boot.actuate.metrics.GaugeService
@@ -18,33 +17,27 @@ import org.springframework.data.redis.connection.RedisConnectionFactory
 
 @Profile("cloud")
 @Configuration
-open class MetricsConfig {
-
-    @Autowired
-    var redisConnectionFactory: RedisConnectionFactory? = null
-
-    @Autowired
-    var export: MetricExportProperties? = null
+class MetricsConfig(val redisConnectionFactory: RedisConnectionFactory, val export: MetricExportProperties) {
 
     // Metrics for an instance
     @Bean
     @ExportMetricReader
-    open fun metricRepository(): MetricRepository = RedisMetricRepository(redisConnectionFactory!!,
-            export!!.redis.prefix, export!!.redis.key)
+    fun metricRepository(): MetricRepository = RedisMetricRepository(redisConnectionFactory,
+            export.redis.prefix, export.redis.key)
 
     @Bean
-    open fun gaugeWriter(): GaugeService = DefaultGaugeService(metricRepository())
+    fun gaugeWriter(): GaugeService = DefaultGaugeService(metricRepository())
 
     @Bean
-    open fun counterService(): CounterService = DefaultCounterService(metricRepository())
+    fun counterService(): CounterService = DefaultCounterService(metricRepository())
 
     // Metrics for all instances
     @Bean
-    open fun aggregateMetricRepository(): MetricRepository = RedisMetricRepository(redisConnectionFactory!!,
-            export!!.redis.aggregatePrefix, export!!.redis.key)
+    fun aggregateMetricRepository(): MetricRepository = RedisMetricRepository(redisConnectionFactory,
+            export.redis.aggregatePrefix, export.redis.key)
 
     @Bean
     @ExportMetricReader
-    open fun aggregateMetricReader(): MetricReader = AggregateMetricReader(aggregateMetricRepository())
+    fun aggregateMetricReader(): MetricReader = AggregateMetricReader(aggregateMetricRepository())
 
 }
