@@ -21,8 +21,8 @@ class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessC
         val fallbackUrl: String = if (entryId > 0L) "https://github.com/making/blog.ik.am/blob/master/content/${String.format("%05d", entryId)}.md" else "https://github.com/making/blog.ik.am/tree/master/content"
         return Entry(entryId = entryId,
                 content = """
-                Wait a minute... <br><br>
-                You could also see this article at GitHub directly ==> $fallbackUrl
+Wait a minute... <br><br>
+You could also see this article at GitHub directly ==> [$fallbackUrl]($fallbackUrl)
                 """,
                 frontMatter = FrontMatter(title = "Service is unavailable now x( !", categories = emptyList(), tags = emptyList()),
                 created = Author(name = "system", date = OffsetDateTime.now()),
