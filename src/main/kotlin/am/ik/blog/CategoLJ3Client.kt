@@ -20,11 +20,11 @@ class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessC
     fun fallbackEntry(entryId: Long): Entry {
         val fallbackUrl: String = if (entryId > 0L) "https://github.com/making/blog.ik.am/blob/master/content/${String.format("%05d", entryId)}.md" else "https://github.com/making/blog.ik.am/tree/master/content"
         return Entry(entryId = entryId,
-                content = "Wait a minute...",
-                frontMatter = FrontMatter(title = """
-            Service is unavailable now x( ! <br><br>
-            You could see this article at GitHub directly ==> $fallbackUrl
-            """, categories = emptyList(), tags = emptyList()),
+                content = """
+                Wait a minute... <br><br>
+                You could also see this article at GitHub directly ==> $fallbackUrl
+                """,
+                frontMatter = FrontMatter(title = "Service is unavailable now x( !", categories = emptyList(), tags = emptyList()),
                 created = Author(name = "system", date = OffsetDateTime.now()),
                 updated = Author(name = "system", date = OffsetDateTime.now()))
     }
