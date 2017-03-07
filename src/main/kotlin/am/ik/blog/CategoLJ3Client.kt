@@ -17,11 +17,17 @@ class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessC
                       @Value("\${blog.api.url:http://localhost:8080}") val apiUrl: String) {
     val typeReference = object : ParameterizedTypeReference<Page>() {}
 
-    fun fallbackEntry(entryId: Long) = Entry(entryId = entryId,
-            content = "Wait a minute...",
-            frontMatter = FrontMatter(title = "Service is unavailable now x( !", categories = emptyList(), tags = emptyList()),
-            created = Author(name = "system", date = OffsetDateTime.now()),
-            updated = Author(name = "system", date = OffsetDateTime.now()))
+    fun fallbackEntry(entryId: Long): Entry {
+        val fallbackUrl: String = if (entryId > 0L) "https://github.com/making/blog.ik.am/blob/master/content/${String.format("%05d", entryId)}.md" else "https://github.com/making/blog.ik.am/tree/master/content"
+        return Entry(entryId = entryId,
+                content = "Wait a minute...",
+                frontMatter = FrontMatter(title = """
+            Service is unavailable now x( ! <br><br>
+            You could see this article at GitHub directly ==> $fallbackUrl
+            """, categories = emptyList(), tags = emptyList()),
+                created = Author(name = "system", date = OffsetDateTime.now()),
+                updated = Author(name = "system", date = OffsetDateTime.now()))
+    }
 
     fun fallbackPage(@Suppress("UNUSED_PARAMETER") pageable: Pageable, @Suppress("UNUSED_PARAMETER") excludeContent: Boolean) = Page(content = listOf(fallbackEntry(0)), isFirst = true, isLast = true, number = 1, numberOfElements = 1, totalElements = 1, totalPages = 1, size = 1)
 
