@@ -22,8 +22,11 @@ class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessC
         return Entry(entryId = entryId,
                 content = """
 Wait a minute ... 🙇<br>
-During downtime, you could also see this article at GitHub directly ==> **[$fallbackUrl]($fallbackUrl)**
-                """,
+During this downtime, you could also see this article at GitHub directly.<br>
+⏩ **[$fallbackUrl]($fallbackUrl)**<br>
+<br>
+Sorry about that
+                    """,
                 frontMatter = FrontMatter(title = "Service is unavailable now x( !", categories = emptyList(), tags = emptyList()),
                 created = Author(name = "system", date = OffsetDateTime.now()),
                 updated = Author(name = "system", date = OffsetDateTime.now()))
