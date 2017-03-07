@@ -106,12 +106,12 @@ jobs:
         file: utils/tasks/download-snapshot.yml
         params:
           GROUP_ID: am.ik.blog
-          ARTIFACT_ID: blog-api
+          ARTIFACT_ID: blog-kotlin-ui
       - put: cf-dev
         params:
           manifest: repo/manifest-dev.yml
           path: output/app.jar
-          current_app_name: blog-api-dev
+          current_app_name: blog-ui-dev
         on_success:
           put: slack-alert
           params: &SLACK_SUCCESS
