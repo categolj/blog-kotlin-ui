@@ -3,22 +3,20 @@ package am.ik.blog
 import am.ik.blog.page.EntryPage
 import am.ik.blog.page.TagsPage
 import am.ik.blog.page.TopPage
+import com.codeborne.selenide.Condition.text
 import com.codeborne.selenide.Configuration
+import com.codeborne.selenide.Selenide.open
 import org.junit.Before
+import org.junit.Ignore
 import org.junit.Test
 import org.junit.runner.RunWith
 import org.springframework.beans.factory.annotation.Value
-import org.springframework.boot.test.SpringApplicationConfiguration
-import org.springframework.boot.test.WebIntegrationTest
+import org.springframework.boot.test.context.SpringBootTest
 import org.springframework.test.context.ActiveProfiles
-import org.springframework.test.context.junit4.SpringJUnit4ClassRunner
-import com.codeborne.selenide.Condition.*
-import com.codeborne.selenide.Selenide.*
-import org.junit.Ignore
+import org.springframework.test.context.junit4.SpringRunner
 
-@RunWith(SpringJUnit4ClassRunner::class)
-@SpringApplicationConfiguration(classes = arrayOf(BlogKotlinUiApplication::class))
-@WebIntegrationTest(randomPort = true)
+@RunWith(SpringRunner::class)
+@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ActiveProfiles("no-graphite")
 @Ignore
 class BlogKotlinUiApplicationTests {
