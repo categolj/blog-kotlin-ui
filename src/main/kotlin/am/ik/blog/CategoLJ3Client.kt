@@ -13,7 +13,7 @@ import org.springframework.web.util.UriComponentsBuilder
 import java.time.OffsetDateTime
 
 @Component
-class CategoLJ3Client(val restTemplate: RestTemplate, val accessCounter: AccessCounter,
+class CategoLJ3Client(val restTemplate: RestTemplate,
                       @Value("\${blog.api.url:http://localhost:8080}") val apiUrl: String) {
     val typeReference = object : ParameterizedTypeReference<Page>() {}
 
@@ -70,7 +70,6 @@ Sorry about that
         val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "entries", entryId.toString())
                 .build()
-        accessCounter.countEntry(entryId)
         return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, Entry::class.java).body
     }
 
