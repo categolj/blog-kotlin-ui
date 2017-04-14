@@ -1,7 +1,6 @@
 package am.ik.blog
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand
-import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.data.domain.Pageable
@@ -40,8 +39,7 @@ Sorry about that
 
     fun fallbackCategories() = listOf(fallbackTags());
 
-    @HystrixCommand(fallbackMethod = "fallbackPage",
-            commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
+    @HystrixCommand(fallbackMethod = "fallbackPage")
     fun findAll(pageable: Pageable, excludeContent: Boolean = true): Page {
         val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "entries")
@@ -52,8 +50,7 @@ Sorry about that
         return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, typeReference).body
     }
 
-    @HystrixCommand(fallbackMethod = "fallbackPage",
-            commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
+    @HystrixCommand(fallbackMethod = "fallbackPage")
     fun findByQuery(query: String, pageable: Pageable): Page {
         val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "entries")
@@ -73,8 +70,7 @@ Sorry about that
         return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, Entry::class.java).body
     }
 
-    @HystrixCommand(fallbackMethod = "fallbackPage",
-            commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
+    @HystrixCommand(fallbackMethod = "fallbackPage")
     fun findByTag(tag: String, pageable: Pageable): Page {
         val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "tags", tag, "entries")
@@ -85,8 +81,7 @@ Sorry about that
         return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, typeReference).body
     }
 
-    @HystrixCommand(fallbackMethod = "fallbackPage",
-            commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
+    @HystrixCommand(fallbackMethod = "fallbackPage")
     fun findByCategories(categories: String, pageable: Pageable): Page {
         val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "categories", categories, "entries")
@@ -97,8 +92,7 @@ Sorry about that
         return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, typeReference).body
     }
 
-    @HystrixCommand(fallbackMethod = "fallbackPage",
-            commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
+    @HystrixCommand(fallbackMethod = "fallbackPage")
     fun findByCreatedBy(name: String, pageable: Pageable): Page {
         val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "users", name, "entries")
@@ -109,8 +103,7 @@ Sorry about that
         return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, typeReference).body
     }
 
-    @HystrixCommand(fallbackMethod = "fallbackPage",
-            commandProperties = arrayOf(HystrixProperty(name = "execution.isolation.thread.timeoutInMilliseconds", value = "3000")))
+    @HystrixCommand(fallbackMethod = "fallbackPage")
     fun findByUpdatedBy(name: String, pageable: Pageable): Page {
         val uri = UriComponentsBuilder.fromUriString(apiUrl)
                 .pathSegment("api", "users", name, "entries")
