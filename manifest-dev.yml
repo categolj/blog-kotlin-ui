@@ -8,6 +8,6 @@ applications:
     env:
       SPRING_PROFILES_ACTIVE: scs
     services:
-    - blog-config-server
+    - blog-config
     - blog-eureka
     - blog-hystrix-dashboard
