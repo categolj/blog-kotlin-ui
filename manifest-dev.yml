@@ -13,4 +13,3 @@ applications:
     - blog-config-server
     - blog-eureka
     - blog-hystrix-dashboard
-    - blog-redis
