@@ -43,16 +43,18 @@ resources:
   - name: cf-dev
     type: cf
     source:
-      api: api.run.pivotal.io
-      username: {{pws-username}}
-      password: {{pws-password}}
-      organization: APJ
-      space: staging
+      api: {{cf-api}}
+      username: {{cf-username}}
+      password: {{cf-password}}
+      organization: {{cf-org}}
+      space: blog
       skip_cert_check: true
   - name: m2
     type: docker-image
     source:
-      repository: making/blog-m2
+      repository: registry-192-168-11-210.sslip.io/making/blog-m2
+      username: {{nexus-username}}
+      password: {{nexus-password}}
   - name: slack-alert
     type: slack-notification
     source:
@@ -112,6 +114,10 @@ jobs:
           manifest: repo/manifest-dev.yml
           path: output/app.jar
           current_app_name: blog-ui-dev
+          environment_variables:
+            SECURITY_USER_NAME: user
+            SECURITY_USER_PASSWORD: password
+            logging.level.org.springframework.retry: DEBUG
         on_success:
           put: slack-alert
           params: &SLACK_SUCCESS
