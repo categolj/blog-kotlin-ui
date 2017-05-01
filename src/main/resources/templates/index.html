@@ -32,7 +32,7 @@
                            th:href="${'https://github.com/making/blog.ik.am/commits/master/content/' + #numbers.formatInteger(entry.entryId, 5, 'NONE') + '.md'}">History</a>
                     </p>
                     <p>
-                        <button class="button is-info"
+                        <button name="read" class="button is-info"
                                 th:onclick="'javascript:loadContent(this, ' + ${entry.entryId} + ');'">Read this article
                         </button>
                     </p>

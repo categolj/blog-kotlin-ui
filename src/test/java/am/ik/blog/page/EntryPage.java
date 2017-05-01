@@ -1,15 +1,18 @@
 package am.ik.blog.page;
 
-import static com.codeborne.selenide.Selenide.$;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class EntryPage {
-    private final ArticleElement article;
+	private ArticleElement article;
 
-    public EntryPage() {
-        this.article = new ArticleElement($("article.card"));
-    }
+	public EntryPage(int entryId, WebClient webClient, int port) throws Exception {
+		HtmlPage entry = webClient
+				.getPage("http://localhost:" + port + "/entries/" + entryId);
+		this.article = new ArticleElement(entry.querySelector("article.card"));
+	}
 
-    public ArticleElement getArticle() {
-        return article;
-    }
+	public ArticleElement getArticle() {
+		return article;
+	}
 }

@@ -1,22 +1,21 @@
 package am.ik.blog.page;
 
-import com.codeborne.selenide.ElementsCollection;
-
-import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
-import static com.codeborne.selenide.Selenide.$$;
+import com.gargoylesoftware.htmlunit.WebClient;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class TopPage {
-    private List<ArticleElement> articles;
+	private List<ArticleElement> articles;
 
-    public TopPage() {
-        ElementsCollection collection = $$("article.card");
-        this.articles = Arrays.asList(new ArticleElement(collection.get(0)), new ArticleElement(collection.get(1)));
-        //this.articles = collection.stream().map(ArticleElement::new).collect(Collectors.toList()); //<- does not work X(
-    }
+	public TopPage(WebClient webClient, int port) throws Exception {
+		HtmlPage top = webClient.getPage("http://localhost:" + port);
+		this.articles = top.querySelectorAll("article.card").stream()
+				.map(ArticleElement::new).collect(Collectors.toList());
+	}
 
-    public List<ArticleElement> getArticles() {
-        return articles;
-    }
+	public List<ArticleElement> getArticles() {
+		return articles;
+	}
 }

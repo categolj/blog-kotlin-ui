@@ -1,36 +1,36 @@
 package am.ik.blog.page;
 
-import com.codeborne.selenide.Condition;
-import com.codeborne.selenide.ElementsCollection;
-import com.codeborne.selenide.SelenideElement;
-
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
-import static com.codeborne.selenide.Selectors.*;
+import com.gargoylesoftware.htmlunit.html.DomNode;
+import com.gargoylesoftware.htmlunit.html.HtmlButton;
+import com.gargoylesoftware.htmlunit.html.HtmlPage;
 
 public class ArticleElement {
-    private final SelenideElement element;
+	private final DomNode element;
 
-    public ArticleElement(SelenideElement element) {
-        this.element = element;
-    }
+	public ArticleElement(DomNode element) {
+		this.element = element;
+	}
 
-    public SelenideElement getTitle() {
-        return this.element.$(".card-header-title");
-    }
+	public DomNode getTitle() {
+		return this.element.querySelector(".card-header-title");
+	}
 
-    public ElementsCollection getTags() {
-        return this.element.$$(".tag");
-    }
+	public List<DomNode> getTags() {
+		return this.element.querySelectorAll(".tag");
+	}
 
-    public SelenideElement getThis() {
-        return element;
-    }
+	public DomNode getThis() {
+		return element;
+	}
 
-    public SelenideElement read() {
-        SelenideElement button = this.element.$(byText("Read this article"));
-        button.click();
-        button.waitUntil(Condition.disappears, TimeUnit.SECONDS.toMillis(5));
-        return this.element.$(".control + p");
-    }
+	public DomNode read() throws Exception {
+		HtmlButton button = this.element.getHtmlPageOrNull().getElementByName("read");
+		HtmlPage click = button.click();
+		TimeUnit.SECONDS.sleep(1);
+		// TODO Exception invoking setInnerHTML
+		return click.querySelector(".has-addons + p");
+	}
 }
