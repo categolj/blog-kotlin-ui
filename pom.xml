@@ -105,7 +105,7 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
-	
+
 	<dependencyManagement>
 		<dependencies>
 			<dependency>
@@ -124,10 +124,9 @@
 			</dependency>
 		</dependencies>
 	</dependencyManagement>
-	
+
 	<build>
 		<finalName>${project.artifactId}</finalName>
-		<sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
 		<plugins>
 			<plugin>
 				<groupId>org.springframework.boot</groupId>
@@ -150,14 +149,14 @@
 				<version>1.10</version>
 				<executions>
 					<execution>
-						<id>add-test-source</id>
-						<phase>generate-test-sources</phase>
+						<id>add-source</id>
+						<phase>generate-sources</phase>
 						<goals>
-							<goal>add-test-source</goal>
+							<goal>add-source</goal>
 						</goals>
 						<configuration>
 							<sources>
-								<source>${project.basedir}/src/test/kotlin</source>
+								<source>${project.basedir}/src/main/kotlin</source>
 							</sources>
 						</configuration>
 					</execution>
@@ -198,7 +197,7 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 	<repositories>
 		<repository>
 			<id>spring-snapshots</id>
