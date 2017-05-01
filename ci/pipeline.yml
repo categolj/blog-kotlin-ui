@@ -47,7 +47,7 @@ resources:
       username: {{cf-username}}
       password: {{cf-password}}
       organization: {{cf-org}}
-      space: blog
+      space: blog-dev
       skip_cert_check: true
   - name: m2
     type: docker-image
@@ -115,8 +115,8 @@ jobs:
           path: output/app.jar
           current_app_name: blog-ui-dev
           environment_variables:
-            SECURITY_USER_NAME: user
-            SECURITY_USER_PASSWORD: password
+            SECURITY_USER_NAME: {{ops-username}}
+            SECURITY_USER_PASSWORD: {{ops-password}}
             logging.level.org.springframework.retry: DEBUG
         on_success:
           put: slack-alert
@@ -239,9 +239,12 @@ jobs:
           ARTIFACT_ID: blog-kotlin-ui
       - put: cf-prod
         params:
-          manifest: repo/manifest-scs.yml
+          manifest: repo/manifest.yml
           path: output/app.jar
           current_app_name: blog-ui
+          environment_variables:
+            SECURITY_USER_NAME: {{ops-username}}
+            SECURITY_USER_PASSWORD: {{ops-password}}
         on_success:
           put: slack-alert
           params:

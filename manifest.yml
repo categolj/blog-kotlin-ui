@@ -4,14 +4,12 @@ applications:
     memory: 1G
     instances: 2
     path: target/blog-kotlin-ui.jar
-    buildpack: https://github.com/cloudfoundry/java-buildpack#v3.8.1
+    buildpack: java_buildpack_offline
     domains:
-      - ik.am
-      - pezapp.io
+    - ik.am
+    - pezapp.io
     host: blog
-    env:
-      CF_TARGET: https://api.run.pez.pivotal.io
     services:
-      - config-service
-      - eureka-service
-      - blog-logstash
+    - blog-config
+    - blog-eureka
+    - blog-hystrix-dashboard
