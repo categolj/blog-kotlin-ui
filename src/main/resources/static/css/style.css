@@ -1,0 +1,23 @@
+h3:before {
+    content: "☕️ ";
+    margin: 5px;
+}
+
+h4:before {
+    content: "🍃 ";
+    margin: 5px;
+}
+
+h5:before {
+    content: "☁️ ";
+    margin: 5px;
+}
+
+h6:before {
+    content: "✈️️ ";
+    margin: 5px;
+}
+
+pre {
+    margin-bottom: 10px;
+}

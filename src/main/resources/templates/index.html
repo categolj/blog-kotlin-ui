@@ -45,10 +45,10 @@
         <ul class="pagination" th:utext="${@paginationRenderer.render(page)}">
         </ul>
     </div>
-    <script th:src="@{/highlight/highlight.pack.js}"></script>
+    <script th:src="@{/css/highlight/highlight.pack.js}"></script>
     <script>hljs.initHighlightingOnLoad();</script>
-    <script th:src="@{/superagent.js}"></script>
-    <script th:src="@{/app.js}"></script>
+    <script th:src="@{/js/superagent.js}"></script>
+    <script th:src="@{/js/app.js}"></script>
 </div>
 </body>
 </html>
