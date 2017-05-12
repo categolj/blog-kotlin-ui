@@ -1,14 +1,27 @@
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      layout:decorator="layout">
+<html
+        xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        layout:decorator="layout">
 <head>
 </head>
 <body>
 <div layout:fragment="content">
-    <h2 class="subtitle is-4">Premium (Beta)</h2>
-    <p>
-        準備中
-    </p>
+    <h2 class="subtitle is-4">Premiumモード (Beta)</h2>
+    <div class="notification is-info">
+        Amazonギフト券のカンパシステム準備中です。<br />
+        今後作成する一部の記事をPremiumモードでのみ閲覧できるようにする予定です。<br />
+        また、扱って欲しいコンテンツの希望も受け付ける予定です。
+    </div>
+    <table class="table is-bordered">
+        <tr>
+            <th>GitHub</th>
+            <td sec:authentication="principal.github"></td>
+        </tr>
+        <tr>
+            <th>Email</th>
+            <td sec:authentication="principal.email"></td>
+        </tr>
+    </table>
 </div>
 </body>
 </html>
