@@ -25,7 +25,9 @@ class PaginationRenderer {
             builder.replaceQueryParam("page", 0)
             sb.append("<a ")
             if (page.isFirst) {
-                sb.append("class=\"is-disabled\" ")
+                sb.append("class=\"pagination-link is-disabled\" ")
+            } else {
+                sb.append("class=\"pagination-link\" ")
             }
             sb.append("href=\"")
             sb.append(UriUtils.decode(builder.build().toString(), "UTF-8"))
@@ -39,7 +41,9 @@ class PaginationRenderer {
                 sb.append("<li>")
                 sb.append("<a ")
                 if (active) {
-                    sb.append("class=\"is-active\" ")
+                    sb.append("class=\"pagination-link is-current\" ")
+                } else {
+                    sb.append("class=\"pagination-link\" ")
                 }
                 sb.append("href=\"")
                 sb.append(UriUtils.decode(builder.build().toString(), "UTF-8"))
@@ -54,7 +58,9 @@ class PaginationRenderer {
             builder.replaceQueryParam("page", page.totalPages - 1)
             sb.append("<a ")
             if (page.isLast) {
-                sb.append("class=\"is-disabled\" ")
+                sb.append("class=\"pagination-link is-disabled\" ")
+            } else {
+                sb.append("class=\"pagination-link\" ")
             }
             sb.append("href=\"")
             sb.append(UriUtils.decode(builder.build().toString(), "UTF-8"))

@@ -42,8 +42,10 @@
         </article>
     </div>
     <div>
-        <ul class="pagination" th:utext="${@paginationRenderer.render(page)}">
-        </ul>
+        <nav class="pagination is-medium">
+            <ul class="pagination-list" th:utext="${@paginationRenderer.render(page)}">
+            </ul>
+        </nav>
     </div>
     <script th:src="@{/css/highlight/highlight.pack.js}"></script>
     <script>hljs.initHighlightingOnLoad();</script>

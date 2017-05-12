@@ -9,12 +9,12 @@ h4:before {
 }
 
 h5:before {
-    content: "☁️ ";
+    content: "✈️️ ";
     margin: 5px;
 }
 
 h6:before {
-    content: "✈️️ ";
+    content: "☁️ ";
     margin: 5px;
 }
 

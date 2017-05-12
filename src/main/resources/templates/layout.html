@@ -1,6 +1,7 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout">
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8"/>
     <title>BLOG.iK.AM</title>
@@ -14,8 +15,8 @@
     </script>
     <meta http-equiv="X-UA-Compatible" content="IE=edge"/>
     <meta name="viewport" content="width=device-width, initial-scale=1"/>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.0.17/css/bulma.min.css"/>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.5.0/css/font-awesome.min.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bulma/0.3.2/css/bulma.min.css" />
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css" />
     <link rel="stylesheet" th:href="@{/css/highlight/styles/androidstudio.css}"/>
     <link rel="stylesheet" th:href="@{/css/style.css}"/>
     <link rel="apple-touch-icon" sizes="57x57" th:href="@{/apple-icon-57x57.png}"/>
@@ -51,6 +52,10 @@
 <br/>
 <div class="container">
     <section>
+        <p sec:authorize="authenticated">
+            <span class="icon"><i class="fa fa-user-circle"></i></span>
+            Logged in as <span sec:authentication="principal">duke</span>
+        </p>
         <p><a href="https://twitter.com/making">@making</a>'s memo</p>
 
         <form method="get" th:action="@{/}">
@@ -58,11 +63,12 @@
                 <input class="input" name="q" type="search"
                        placeholder="Search..."
                        th:value="${param.q != null ? param.q[0] : ''}"/>
-                <i class="fa fa-search"></i>
             </p>
             <p>
                 <a th:href="@{/categories}" class="button is-small is-primary">All Categories</a>
                 <a th:href="@{/tags}" class="button is-small is-primary">All Tags</a>
+                <a th:href="@{/premium/}" class="button is-small is-primary is-outlined">Premium (Beta)</a>
+                <a th:href="@{/logout}" sec:authorize="authenticated" class="button is-small is-primary is-outlined">Logout</a>
             </p>
         </form>
     </section>
@@ -73,7 +79,7 @@
     <hr/>
     <aside>
         <section id="links">
-            <h3 class="subtitle is-4">Links</h3>
+            <h5 class="subtitle is-4">Links</h5>
             <ul>
                 <li><i class="fa fa-amazon"></i>&nbsp;<a href="http://bit.ly/hajiboot2">はじめてのSpring Boot [改訂版] (書きました)</a></li>
                 <li><i class="fa fa-amazon"></i>&nbsp;<a href="http://bit.ly/spring-book">Spring徹底入門 Spring FrameworkによるJavaアプリケーション開発 (共著しました)</a></li>
@@ -87,9 +93,10 @@
             </ul>
         </section>
     </aside>
-    <footer class="footer">
+    <footer>
         <div class="container">
             <div class="content is-centered">
+                <hr />
                 <p>
                     Powered by <a href="https://github.com/categolj">CategoLJ4</a>
                 </p>
