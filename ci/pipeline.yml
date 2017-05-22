@@ -249,6 +249,8 @@ jobs:
           environment_variables:
             SECURITY_USER_NAME: {{ops-username}}
             SECURITY_USER_PASSWORD: {{ops-password}}
+            SECURITY_OAUTH2_CLIENT_CLIENT_ID: {{github-oauth-client-id}}
+            SECURITY_OAUTH2_CLIENT_CLIENT_SECRET: {{github-oauth-client-secret}}
         on_success:
           put: slack-alert
           params:

@@ -7,6 +7,8 @@ applications:
     # buildpack: java_buildpack
     env:
       SPRING_PROFILES_ACTIVE: scs
+      SECURITY_OAUTH2_CLIENT_CLIENT_ID: 455871b6ae4e8635c5c1
+      SECURITY_OAUTH2_CLIENT_CLIENT_SECRET: be8d3eb74ec1c19cef6b23c8037c7aa4327726c7
     services:
     - blog-config
     - blog-eureka
