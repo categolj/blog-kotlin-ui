@@ -1,17 +1,13 @@
 package am.ik.blog
 
-import am.ik.blog.maintenance.MaintenanceException
 import am.ik.marked4j.Marked
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
-import org.springframework.http.HttpStatus
 import org.springframework.stereotype.Controller
 import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-import org.springframework.web.client.HttpServerErrorException
-import org.springframework.web.client.ResourceAccessException
 
 
 @Controller
@@ -87,32 +83,6 @@ class BlogUiController(val categoLJ3Client: CategoLJ3Client, val marked: Marked,
         val categories = categoLJ3Client.findCategories()
         model.addAttribute("categories", categories)
         return "categories"
-    }
-
-    @ExceptionHandler(ResourceAccessException::class)
-    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
-    fun handleResourceAccessException(e: ResourceAccessException): String {
-        log.error("Cannot access " + apiUrl, e)
-        return "error/api-server-down"
-    }
-
-    @ExceptionHandler(HttpServerErrorException::class)
-    fun handleHttpServerErrorException(e: HttpServerErrorException): String {
-        log.error("API Server Error", e)
-        return "error/api-server-error"
-    }
-
-    @ExceptionHandler(MaintenanceException::class)
-    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
-    fun handleMaintenanceException(): String {
-        return "error/maintenance"
-    }
-
-    @ExceptionHandler(Exception::class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    fun handleException(e: Exception): String {
-        log.error("Unexpected Error", e)
-        return "error/unexpected-error"
     }
 }
 
