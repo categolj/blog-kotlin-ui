@@ -1,5 +1,6 @@
 package am.ik.blog
 
+import am.ik.blog.maintenance.MaintenanceException
 import am.ik.marked4j.Marked
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Value
@@ -99,6 +100,12 @@ class BlogUiController(val categoLJ3Client: CategoLJ3Client, val marked: Marked,
     fun handleHttpServerErrorException(e: HttpServerErrorException): String {
         log.error("API Server Error", e)
         return "error/api-server-error"
+    }
+
+    @ExceptionHandler(MaintenanceException::class)
+    @ResponseStatus(HttpStatus.SERVICE_UNAVAILABLE)
+    fun handleMaintenanceException(): String {
+        return "error/maintenance"
     }
 
     @ExceptionHandler(Exception::class)
