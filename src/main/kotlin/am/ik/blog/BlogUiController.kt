@@ -2,7 +2,6 @@ package am.ik.blog
 
 import am.ik.marked4j.Marked
 import org.slf4j.LoggerFactory
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.data.domain.Pageable
 import org.springframework.data.web.PageableDefault
 import org.springframework.stereotype.Controller
@@ -11,8 +10,7 @@ import org.springframework.web.bind.annotation.*
 
 
 @Controller
-class BlogUiController(val categoLJ3Client: CategoLJ3Client, val marked: Marked,
-                       @Value("\${blog.api.url:http://localhost:8080}") val apiUrl: String) {
+class BlogUiController(val categoLJ3Client: CategoLJ3Client, val marked: Marked) {
     val log = LoggerFactory.getLogger(BlogUiController::class.java)
 
     @GetMapping("/", "/entries")

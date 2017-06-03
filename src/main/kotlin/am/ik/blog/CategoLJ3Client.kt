@@ -1,7 +1,6 @@
 package am.ik.blog
 
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.data.domain.Pageable
 import org.springframework.http.HttpEntity
@@ -13,7 +12,7 @@ import java.time.OffsetDateTime
 
 @Component
 class CategoLJ3Client(val restTemplate: RestTemplate,
-                      @Value("\${blog.api.url:http://localhost:8080}") val apiUrl: String) {
+                      val props: BlogProperties) {
     val typeReference = object : ParameterizedTypeReference<Page>() {}
 
     fun fallbackEntry(entryId: Long): Entry {
@@ -41,7 +40,7 @@ Sorry about that
 
     @HystrixCommand(fallbackMethod = "fallbackPage")
     fun findAll(pageable: Pageable, excludeContent: Boolean = true): Page {
-        val uri = UriComponentsBuilder.fromUriString(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(props.api.url)
                 .pathSegment("api", "entries")
                 .queryParam("page", pageable.pageNumber)
                 .queryParam("size", pageable.pageSize)
@@ -52,7 +51,7 @@ Sorry about that
 
     @HystrixCommand(fallbackMethod = "fallbackPage")
     fun findByQuery(query: String, pageable: Pageable): Page {
-        val uri = UriComponentsBuilder.fromUriString(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(props.api.url)
                 .pathSegment("api", "entries")
                 .queryParam("q", query)
                 .queryParam("page", pageable.pageNumber)
@@ -64,7 +63,7 @@ Sorry about that
 
     @HystrixCommand(fallbackMethod = "fallbackEntry")
     fun findById(entryId: Long): Entry {
-        val uri = UriComponentsBuilder.fromUriString(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(props.api.url)
                 .pathSegment("api", "entries", entryId.toString())
                 .build()
         return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, Entry::class.java).body
@@ -72,7 +71,7 @@ Sorry about that
 
     @HystrixCommand(fallbackMethod = "fallbackPage")
     fun findByTag(tag: String, pageable: Pageable): Page {
-        val uri = UriComponentsBuilder.fromUriString(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(props.api.url)
                 .pathSegment("api", "tags", tag, "entries")
                 .queryParam("page", pageable.pageNumber)
                 .queryParam("size", pageable.pageSize)
@@ -83,7 +82,7 @@ Sorry about that
 
     @HystrixCommand(fallbackMethod = "fallbackPage")
     fun findByCategories(categories: String, pageable: Pageable): Page {
-        val uri = UriComponentsBuilder.fromUriString(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(props.api.url)
                 .pathSegment("api", "categories", categories, "entries")
                 .queryParam("page", pageable.pageNumber)
                 .queryParam("size", pageable.pageSize)
@@ -94,7 +93,7 @@ Sorry about that
 
     @HystrixCommand(fallbackMethod = "fallbackPage")
     fun findByCreatedBy(name: String, pageable: Pageable): Page {
-        val uri = UriComponentsBuilder.fromUriString(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(props.api.url)
                 .pathSegment("api", "users", name, "entries")
                 .queryParam("page", pageable.pageNumber)
                 .queryParam("size", pageable.pageSize)
@@ -105,7 +104,7 @@ Sorry about that
 
     @HystrixCommand(fallbackMethod = "fallbackPage")
     fun findByUpdatedBy(name: String, pageable: Pageable): Page {
-        val uri = UriComponentsBuilder.fromUriString(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(props.api.url)
                 .pathSegment("api", "users", name, "entries")
                 .queryParam("updated")
                 .queryParam("page", pageable.pageNumber)
@@ -117,7 +116,7 @@ Sorry about that
 
     @HystrixCommand(fallbackMethod = "fallbackTags")
     fun findTags(): List<String> {
-        val uri = UriComponentsBuilder.fromUriString(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(props.api.url)
                 .pathSegment("api", "tags")
                 .build()
         return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, object : ParameterizedTypeReference<List<String>>() {}).body
@@ -125,7 +124,7 @@ Sorry about that
 
     @HystrixCommand(fallbackMethod = "fallbackCategories")
     fun findCategories(): List<List<String>> {
-        val uri = UriComponentsBuilder.fromUriString(apiUrl)
+        val uri = UriComponentsBuilder.fromUriString(props.api.url)
                 .pathSegment("api", "categories")
                 .build()
         return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, object : ParameterizedTypeReference<List<List<String>>>() {}).body
