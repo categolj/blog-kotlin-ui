@@ -41,9 +41,9 @@ class PaginationRenderer {
                 sb.append("<li>")
                 sb.append("<a ")
                 if (active) {
-                    sb.append("class=\"pagination-link is-current\" ")
+                    sb.append("class=\"pagination-link is-small is-current\" ")
                 } else {
-                    sb.append("class=\"pagination-link\" ")
+                    sb.append("class=\"pagination-link is-small\" ")
                 }
                 sb.append("href=\"")
                 sb.append(UriUtils.decode(builder.build().toString(), "UTF-8"))
@@ -58,9 +58,9 @@ class PaginationRenderer {
             builder.replaceQueryParam("page", page.totalPages - 1)
             sb.append("<a ")
             if (page.isLast) {
-                sb.append("class=\"pagination-link is-disabled\" ")
+                sb.append("class=\"pagination-link is-small is-disabled\" ")
             } else {
-                sb.append("class=\"pagination-link\" ")
+                sb.append("class=\"pagination-link is-small\" ")
             }
             sb.append("href=\"")
             sb.append(UriUtils.decode(builder.build().toString(), "UTF-8"))
