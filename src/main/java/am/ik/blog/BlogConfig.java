@@ -17,7 +17,8 @@ import am.ik.marked4j.MarkedBuilder;
 public class BlogConfig {
 	@Bean
 	Marked marked() {
-		return new MarkedBuilder().breaks(true).build();
+		return new MarkedBuilder().breaks(true).autoToc(true)
+				.enableHeadingIdUriEncoding(true).build();
 	}
 
 	@Bean
