@@ -1,3 +1,7 @@
+body {
+    font-size: small;
+}
+
 h3:before {
     content: "☕️ ";
     margin: 5px;
