@@ -120,8 +120,8 @@ class BlogUiController(val categoLJ3Client: CategoLJ3Client, val marked: Marked)
         val entry = categoLJ3Client.findByIdExcludeContent(e.entryId())
         model.addAttribute("entry", entry)
         return Optional.ofNullable(req.getParameter("partial"))
-                .map { "error/partial/loginRequired" }
-                .orElse("error/loginRequired")
+                .map { "error/partial/login-required" }
+                .orElse("error/login-required")
     }
 
     @ExceptionHandler(UnsubscribedException::class)
