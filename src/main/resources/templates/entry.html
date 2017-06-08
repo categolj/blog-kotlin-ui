@@ -14,7 +14,11 @@
     <article class="card is-fullwidth">
         <header class="card-header">
             <p class="card-header-title">
-                <a th:href="@{'/entries/' + ${entry.entryId}}" th:text="${entry.frontMatter.title}">Hello</a>
+                <span th:if="${entry.isPremium()}">🅿&nbsp;</span>
+                <a th:href="@{'/entries/' + ${entry.entryId}}" th:text="${entry.frontMatter.title}"
+                   th:unless="${entry.isPremium()}">Hello</a>
+                <a th:href="@{'/p/entries/' + ${entry.entryId}}" th:text="${entry.frontMatter.title}"
+                   th:if="${entry.isPremium()}">Hello</a>
             </p>
         </header>
         <div class="card-content">
@@ -27,9 +31,13 @@
                        th:text="${entry.created.name}"></a><br/>
                     category: <span th:utext="${@categoriesRenderer.render(entry.frontMatter.categories)}"></span><br/>
                     tags: <span th:utext="${@tagRenderer.render(entry.frontMatter.tags)}"></span>
+                    <!--/*/ <th:block th:if="${entry.isPremium()}"> /*/-->
+                    <br/>
+                    point: <strong th:text="${entry.frontMatter.point}"></strong> Pt
+                    <!--/*/ </th:block> /*/-->
                 </p>
 
-                <p class="control has-addons">
+                <p class="control has-addons" th:unless="${entry.isPremium()}">
                     <a class="button is-small"
                        th:href="${'https://github.com/making/blog.ik.am/edit/master/content/' + #numbers.formatInteger(entry.entryId, 5, 'NONE') + '.md'}">Edit</a>
                     <a class="button is-small"

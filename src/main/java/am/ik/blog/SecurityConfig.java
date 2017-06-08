@@ -21,6 +21,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 						"/tags/**", "/categories/**", "/users/**", "/error", "/login",
 						"/logout")
 				.permitAll() //
+				.mvcMatchers("/p/entries/{entryId}").permitAll() //
 				.mvcMatchers("/premium/**").authenticated() //
 				.antMatchers("/*.png", "/css/**", "/js/**").permitAll() //
 				.anyRequest().hasRole("ADMIN") //

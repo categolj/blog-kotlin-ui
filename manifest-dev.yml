@@ -10,6 +10,7 @@ applications:
       SECURITY_OAUTH2_CLIENT_CLIENT_ID: 455871b6ae4e8635c5c1
       SECURITY_OAUTH2_CLIENT_CLIENT_SECRET: be8d3eb74ec1c19cef6b23c8037c7aa4327726c7
     services:
+    - point-rabbit
     - blog-config
     - blog-eureka
     - blog-hystrix-dashboard

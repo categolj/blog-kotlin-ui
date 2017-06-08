@@ -1,5 +1,6 @@
 package am.ik.blog
 
+import com.fasterxml.jackson.annotation.JsonInclude
 import com.fasterxml.jackson.annotation.JsonProperty
 import java.time.OffsetDateTime
 
@@ -24,9 +25,15 @@ data class Entry(
         @JsonProperty("content") val content: String?,
         @JsonProperty("created") val created: Author?,
         @JsonProperty("updated") val updated: Author?,
-        @JsonProperty("frontMatter") val frontMatter: FrontMatter)
+        @JsonProperty("frontMatter") val frontMatter: FrontMatter) {
+
+    fun isPremium(): Boolean {
+        return this.frontMatter.point != null
+    }
+}
 
 data class FrontMatter(
         @JsonProperty("title") val title: String,
         @JsonProperty("tags") val tags: List<String>,
-        @JsonProperty("categories") val categories: List<String>)
+        @JsonProperty("categories") val categories: List<String>,
+        @JsonInclude(JsonInclude.Include.NON_NULL) @JsonProperty("point") val point: Int?)

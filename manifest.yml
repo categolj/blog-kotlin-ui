@@ -10,6 +10,7 @@ applications:
     - pezapp.io
     host: blog
     services:
+    - point-rabbit
     - blog-config
     - blog-eureka
     - blog-hystrix-dashboard

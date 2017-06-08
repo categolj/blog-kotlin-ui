@@ -1,0 +1,48 @@
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+      layout:decorator="layout">
+<head>
+    <title th:inline="text">[[${entry.frontMatter.title}]] - BLOG.IK.AM</title>
+    <meta content="https://blog.ik.am/apple-icon-120x120.png" name="twitter:image:src"/>
+    <meta content="@making" name="twitter:site"/>
+    <meta content="summary" name="twitter:card"/>
+    <meta content="BLOG.IK.AM" name="twitter:title"/>
+    <meta th:content="${entry.frontMatter.title}" name="twitter:description"/>
+</head>
+<body>
+<div layout:fragment="content">
+    <article class="card is-fullwidth">
+        <header class="card-header">
+            <p class="card-header-title">
+                <span th:if="${entry.isPremium()}">🅿&nbsp;</span>
+                <a th:href="@{'/entries/' + ${entry.entryId}}" th:text="${entry.frontMatter.title}"
+                   th:unless="${entry.isPremium()}">Hello</a>
+                <a th:href="@{'/p/entries/' + ${entry.entryId}}" th:text="${entry.frontMatter.title}"
+                   th:if="${entry.isPremium()}">Hello</a>
+            </p>
+        </header>
+        <div class="card-content">
+            <div class="content">
+                <p class="article-meta" th:inline="text">updated at [[${entry.updated.date}]] by
+                    <a th:href="@{'/users/' + ${entry.updated.name} + '/entries?updated'}"
+                       th:text="${entry.updated.name}"></a>
+                    created at [[${entry.created.date}]] by
+                    <a th:href="@{'/users/' + ${entry.created.name} + '/entries'}"
+                       th:text="${entry.created.name}"></a><br/>
+                    category: <span th:utext="${@categoriesRenderer.render(entry.frontMatter.categories)}"></span><br/>
+                    tags: <span th:utext="${@tagRenderer.render(entry.frontMatter.tags)}"></span>
+                    <!--/*/ <th:block th:if="${entry.isPremium()}"> /*/-->
+                    <br/>
+                    point: <strong th:text="${entry.frontMatter.point}"></strong> Pt
+                    <!--/*/ </th:block> /*/-->
+                </p>
+
+                <div th:include="error/partial/loginRequired"></div>
+            </div>
+        </div>
+    </article>
+    <script th:src="@{/css/highlight/highlight.pack.js}"></script>
+    <script>hljs.initHighlightingOnLoad();</script>
+</div>
+</body>
+</html>
