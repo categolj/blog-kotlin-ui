@@ -1,15 +1,15 @@
-<html xmlns:th="http://www.thymeleaf.org"
-      xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
-      xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
-      layout:decorator="layout">
+<html
+        xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
+        xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
+        layout:decorator="layout">
 <head>
 </head>
 <body>
 <div layout:fragment="content">
     <h2 class="subtitle is-4">Premiumモード (Beta)</h2>
     <div class="notification is-info">
-        Amazonギフト券のカンパシステム準備中です。<br/>
-        今後作成する一部の記事をPremiumモードでのみ閲覧できるようにする予定です。<br/>
+        タイトルに🅿のつく記事はポイントを消費します。<br/>
+        ポイントはAmazonギフト券によるカンパで追加できるようにする予定です。<br/>
         また、扱って欲しいコンテンツの希望も受け付ける予定です。
     </div>
     <table class="table is-bordered">
@@ -23,7 +23,7 @@
         </tr>
         <tr>
             <th>Point</th>
-            <td sec:authentication="principal.point.point"></td>
+            <td><strong sec:authentication="principal.point.point"></strong> Pt</td>
         </tr>
     </table>
 </div>
