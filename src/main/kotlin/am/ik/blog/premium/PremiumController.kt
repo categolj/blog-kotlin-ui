@@ -6,7 +6,6 @@ import am.ik.blog.point.ConsumePoint
 import am.ik.blog.point.SubscriptionFailedException
 import org.slf4j.LoggerFactory
 import org.springframework.cloud.stream.messaging.Source
-import org.springframework.http.HttpStatus
 import org.springframework.http.ResponseEntity
 import org.springframework.messaging.support.MessageBuilder
 import org.springframework.security.core.annotation.AuthenticationPrincipal
@@ -42,7 +41,6 @@ class PremiumController(val source: Source, val categoLJ3Client: CategoLJ3Client
         return "OK"
     }
 
-    @ResponseStatus(HttpStatus.CONFLICT)
     @ExceptionHandler(SubscriptionFailedException::class)
     fun handleCannotConsumeException(e: SubscriptionFailedException): ResponseEntity<Any> {
         val map = LinkedHashMap<String, String?>()
