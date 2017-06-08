@@ -27,9 +27,11 @@ data class Entry(
         @JsonProperty("updated") val updated: Author?,
         @JsonProperty("frontMatter") val frontMatter: FrontMatter) {
 
-    fun isPremium(): Boolean {
-        return this.frontMatter.point != null
-    }
+    fun isPremium() = this.frontMatter.point != null
+
+    fun isWarning() = !this.isDanger() && this.updated!!.date.isBefore(OffsetDateTime.now().minusYears(1))
+
+    fun isDanger() = this.updated!!.date.isBefore(OffsetDateTime.now().minusYears(3))
 }
 
 data class FrontMatter(
