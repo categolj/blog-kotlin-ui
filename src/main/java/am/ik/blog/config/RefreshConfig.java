@@ -1,4 +1,4 @@
-package am.ik.blog;
+package am.ik.blog.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;

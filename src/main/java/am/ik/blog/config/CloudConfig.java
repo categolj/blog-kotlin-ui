@@ -1,4 +1,4 @@
-package am.ik.blog;
+package am.ik.blog.config;
 
 import org.springframework.amqp.rabbit.connection.ConnectionFactory;
 import org.springframework.cloud.config.java.AbstractCloudConfig;

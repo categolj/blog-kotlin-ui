@@ -1,4 +1,4 @@
-package am.ik.blog;
+package am.ik.blog.config;
 
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.cloud.client.loadbalancer.LoadBalanced;
