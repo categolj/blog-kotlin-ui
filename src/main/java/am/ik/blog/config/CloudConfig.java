@@ -16,8 +16,8 @@ public class CloudConfig extends AbstractCloudConfig {
 		return connectionFactory().rabbitConnectionFactory("point-rabbit");
 	}
 
-	@Bean
-	ConnectionFactory zipkinRabbitConnectionFactory() {
-		return connectionFactory().rabbitConnectionFactory("zipkin-rabbit");
-	}
+	// @Bean
+	// ConnectionFactory zipkinRabbitConnectionFactory() {
+	// 	return connectionFactory().rabbitConnectionFactory("zipkin-rabbit");
+	// }
 }

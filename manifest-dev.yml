@@ -14,4 +14,4 @@ applications:
     - blog-config
     - blog-eureka
     - blog-hystrix-dashboard
-    - zipkin-rabbit
+    # - zipkin-rabbit

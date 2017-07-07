@@ -4,7 +4,7 @@ applications:
     memory: 1G
     instances: 2
     path: target/blog-kotlin-ui.jar
-    buildpack: java_buildpack_offline
+    buildpack: https://github.com/cloudfoundry/java-buildpack#v3.18    
     domains:
     - ik.am
     - pezapp.io
@@ -14,4 +14,5 @@ applications:
     - blog-config
     - blog-eureka
     - blog-hystrix-dashboard
-    - zipkin-rabbit
+    - metrics-forwarder
+    #- zipkin-rabbit
