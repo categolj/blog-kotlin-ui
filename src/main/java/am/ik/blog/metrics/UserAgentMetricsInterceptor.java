@@ -40,6 +40,7 @@ public class UserAgentMetricsInterceptor extends HandlerInterceptorAdapter {
 	}
 
 	private String counterName(String type, String attr) {
-		return "useragent." + type + "." + attr.toLowerCase().replace(" ", "");
+		return "useragent." + type + "."
+				+ attr.toLowerCase().replace(" ", "").replace("!", "_").replace("-", "_");
 	}
 }
