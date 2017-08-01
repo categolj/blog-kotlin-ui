@@ -15,4 +15,5 @@ applications:
     - blog-eureka
     - blog-hystrix-dashboard
     - metrics-forwarder
+    - syslog-drain
     #- zipkin-rabbit
