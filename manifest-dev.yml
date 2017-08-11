@@ -4,7 +4,9 @@ applications:
     memory: 1G
     instances: 1
     path: target/blog-kotlin-ui.jar
-    # buildpack: java_buildpack
+    buildpack: https://github.com/cloudfoundry/java-buildpack#v3.19
+    health-check-type: http
+    health-check-http-endpoint: /
     env:
       SPRING_PROFILES_ACTIVE: scs
       SECURITY_OAUTH2_CLIENT_CLIENT_ID: 455871b6ae4e8635c5c1
