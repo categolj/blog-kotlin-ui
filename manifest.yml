@@ -4,18 +4,18 @@ applications:
     memory: 1G
     instances: 2
     path: target/blog-kotlin-ui.jar
-    buildpack: https://github.com/cloudfoundry/java-buildpack#v3.19
+    buildpack: java_buildpack
     health-check-type: http
     health-check-http-endpoint: /
-    domains:
-    - ik.am
-    - pezapp.io
-    host: blog
+    timeout: 180
+    routes:
+    - route: blog.ik.am
+    - route: blog-ui-202-241-169-198.sslip.io
     services:
     - point-rabbit
     - blog-config
     - blog-eureka
-    - blog-hystrix-dashboard
-    - metrics-forwarder
-    - syslog-drain
-    #- zipkin-rabbit
+    #    - blog-hystrix-dashboard
+    #    - metrics-forwarder
+    #    - syslog-drain
+    #    - zipkin-rabbit
