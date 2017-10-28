@@ -8,13 +8,11 @@ applications:
     health-check-type: http
     health-check-http-endpoint: /
     timeout: 180
-    routes:
-    - route: blog.ik.am
-    - route: blog-ui-202-241-169-198.sslip.io
     services:
     - point-rabbit
     - blog-config
     - blog-eureka
+    # - blog-metrics-forwarder
     #    - blog-hystrix-dashboard
     #    - metrics-forwarder
     #    - syslog-drain
