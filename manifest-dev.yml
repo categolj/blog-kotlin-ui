@@ -4,7 +4,6 @@ applications:
     memory: 1G
     instances: 1
     path: target/blog-kotlin-ui.jar
-    buildpack: https://github.com/cloudfoundry/java-buildpack#v3.19
     health-check-type: http
     health-check-http-endpoint: /
     env:
@@ -15,5 +14,5 @@ applications:
     - point-rabbit
     - blog-config
     - blog-eureka
-    - blog-hystrix-dashboard
+    # - blog-hystrix-dashboard
     # - zipkin-rabbit
