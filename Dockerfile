@@ -1,5 +1,5 @@
 FROM java:8-alpine
 VOLUME /tmp
 ARG JAR_FILE
-ADD ./target/${JAR_FILE} /app.jar
+ADD ${JAR_FILE} /app.jar
 ENTRYPOINT ["java","-Djava.security.egd=file:/dev/./urandom","-jar","/app.jar"]
