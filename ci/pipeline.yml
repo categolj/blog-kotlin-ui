@@ -51,6 +51,12 @@ resources:
       organization: ((cf-org))
       space: blog-dev
       skip_cert_check: true
+  - name: docker
+    type: docker-image
+    source:
+      repository: asia.gcr.io/fe-tmaki/blog-kotlin-ui
+      username: _json_key
+      password: ((gcr-key))
   - name: nexus
     type: maven
     source:
@@ -166,6 +172,53 @@ jobs:
       put: slack-alert
       params:
         <<: *SLACK_SUCCESS
+- name: docker-push-develop
+  plan:
+  - aggregate:
+    - get: repo
+      resource: repo-develop
+      passed:
+      - upload-to-nexus-snapshots
+      trigger: true
+    - get: repo-version
+    - get: nexus
+      passed:
+      - upload-to-nexus-snapshots
+  - task: update-docker
+    config: &COPY_DOCKERFILE
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: ubuntu
+      inputs:
+      - name: repo
+      - name: nexus
+      outputs:
+      - name: updated 
+      run:
+        path: bash
+        args:
+        - -c
+        - |
+          set -e
+          mv nexus/*.jar updated/app.jar
+          cp repo/Dockerfile updated/Dockerfile
+          cat updated/Dockerfile
+  - put: docker
+    params: &DOCKER_PUSH
+      build: updated
+      build_args:
+        JAR_FILE: app.jar
+    on_failure:
+      put: slack-alert
+      params:
+        <<: *SLACK_FAILURE
+    on_success:
+      put: slack-alert
+      params:
+        <<: *SLACK_SUCCESS
+
 ### Prod
 - name: merge-develop-to-master
   plan:
@@ -174,6 +227,7 @@ jobs:
       resource: repo-develop
       passed:
       - deploy-develop
+      - docker-push-develop
     - get: repo-dest
       resource: repo-master
   - task: merge-develop-to-master
@@ -327,6 +381,39 @@ jobs:
       manifest: repo/manifest.yml
       path: nexus/*.jar
       current_app_name: blog-ui
+      environment_variables:
+        SECURITY_USER_NAME: ((ops-username))
+        SECURITY_USER_PASSWORD: ((ops-password))
+        SECURITY_OAUTH2_CLIENT_CLIENT_ID: ((github-oauth-client-id))
+        SECURITY_OAUTH2_CLIENT_CLIENT_SECRET: ((github-oauth-client-secret))
+    on_failure:
+      put: slack-alert
+      params:
+        <<: *SLACK_FAILURE
+    on_success:
+      put: slack-alert
+      params:
+        <<: *SLACK_SUCCESS
+- name: docker-push-master
+  plan:
+  - aggregate:
+    - get: repo
+      resource: repo-master
+      passed:
+      - upload-to-nexus-releases
+      trigger: true
+    - get: repo-version
+    - get: nexus
+      passed:
+      - upload-to-nexus-releases
+  - task: update-docker
+    config:
+      <<: *COPY_DOCKERFILE
+  - put: docker
+    params:
+      <<: *DOCKER_PUSH
+      tag: repo-version/number
+      tag_as_latest: true
     on_failure:
       put: slack-alert
       params:
@@ -342,6 +429,7 @@ jobs:
       resource: repo-master
       passed:
       - deploy-master
+      - docker-push-master
       trigger: true
     - get: repo-dest
       resource: repo-develop
