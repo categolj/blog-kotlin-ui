@@ -10,6 +10,11 @@ resource_types:
   source:
     repository: pivotalpa/maven-resource
     tag: 1.3.4
+- name: kubernetes
+  type: docker-image
+  source:
+    repository: zlabjp/kubernetes-resource
+    tag: "1.8"
 
 resources:
   - name: repo-master
@@ -57,6 +62,10 @@ resources:
       repository: asia.gcr.io/fe-tmaki/blog-kotlin-ui
       username: _json_key
       password: ((gcr-key))
+  - name: k8s-master
+    type: kubernetes
+    source:
+      kubeconfig: ((kubeconfig))
   - name: nexus
     type: maven
     source:
@@ -422,6 +431,47 @@ jobs:
       put: slack-alert
       params:
         <<: *SLACK_SUCCESS
+- name: deploy-k8s-master
+  plan:
+  - aggregate:
+    - get: repo
+      resource: repo-master
+      passed:
+      - docker-push-master
+      trigger: true
+    - get: repo-version
+  - task: update-k8s-manifest
+    config:
+      platform: linux
+      image_resource:
+        type: docker-image
+        source:
+          repository: ubuntu
+      inputs:
+      - name: repo
+      - name: repo-version
+      outputs:
+      - name: updated
+      run:
+        path: bash
+        args:
+        - -c
+        - |
+          set -e
+          VERSION=`cat repo-version/number`
+          sed "s/latest/${VERSION}/g" repo/k8s/blog-ui.yml > updated/blog-ui.yml
+  - put: k8s-master
+    params:
+      kubectl: apply -f updated/blog-ui.yml
+      wait_until_ready_selector: app=blog-ui
+    on_failure:
+      put: slack-alert
+      params:
+        <<: *SLACK_FAILURE
+    on_success:
+      put: slack-alert
+      params:
+        <<: *SLACK_SUCCESS
 - name: bump-to-next-patch-version
   plan:
   - aggregate:
@@ -429,7 +479,7 @@ jobs:
       resource: repo-master
       passed:
       - deploy-master
-      - docker-push-master
+      - deploy-k8s-master
       trigger: true
     - get: repo-dest
       resource: repo-develop
