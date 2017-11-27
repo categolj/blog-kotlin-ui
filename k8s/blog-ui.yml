@@ -36,6 +36,26 @@ spec:
           value: cloud
         - name: JAVA_OPTS
           value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1"
+        - name: SECURITY_USER_NAME
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: ops-username
+        - name: SECURITY_USER_PASSWORD
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: ops-password
+        - name: SECURITY_OAUTH2_CLIENT_CLIENT_ID
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: github-oauth-client-id
+        - name: SECURITY_OAUTH2_CLIENT_CLIENT_SECRET
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: github-oauth-client-secret
         - name: VCAP_APPLICATION
           valueFrom:
             configMapKeyRef:
