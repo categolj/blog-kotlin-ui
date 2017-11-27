@@ -1,0 +1,53 @@
+
+kind: Service
+apiVersion: v1
+metadata:
+  name: blog-ui-service
+spec:
+  selector:
+    app: blog-ui
+  ports:
+  - protocol: TCP
+    port: 8080
+    nodePort: 30082
+  type: NodePort
+---
+apiVersion: extensions/v1beta1
+kind: Deployment
+metadata:
+  name: blog-ui-deployment
+spec:
+  replicas: 2
+  template:
+    metadata:
+      labels:
+        app: blog-ui
+    spec:
+      containers:
+      - name: blog-ui
+        image: asia.gcr.io/fe-tmaki/blog-kotlin-ui:latest
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 8080
+        env:
+        - name: PORT
+          value: "8080"
+        - name: SPRING_PROFILES_ACTIVE
+          value: cloud
+        - name: JAVA_OPTS
+          value: "-XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1"
+        - name: VCAP_APPLICATION
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: vcap-application.json
+        - name: VCAP_SERVICES
+          valueFrom:
+            configMapKeyRef:
+              name: blog-config
+              key: vcap-services.json
+        resources:
+          limits:
+            memory: "1024Mi"
+          requests:
+            memory: "1024Mi"
