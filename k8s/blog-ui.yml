@@ -86,3 +86,11 @@ spec:
           timeoutSeconds: 3
           periodSeconds: 10
           failureThreshold: 3
+        livenessProbe:
+          httpGet:
+            path: /
+            port: 8080
+          initialDelaySeconds: 180
+          timeoutSeconds: 3
+          periodSeconds: 10
+          failureThreshold: 3
