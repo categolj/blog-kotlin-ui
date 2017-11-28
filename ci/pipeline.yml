@@ -463,6 +463,7 @@ jobs:
   - put: k8s-master
     params:
       kubectl: apply -f updated/blog-ui.yml
+      wait_until_ready: 120
       wait_until_ready_selector: app=blog-ui
     on_failure:
       put: slack-alert
