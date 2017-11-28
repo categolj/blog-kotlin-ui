@@ -15,6 +15,8 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: blog-ui-deployment
+  labels:
+    app: blog-ui
 spec:
   replicas: 2
   revisionHistoryLimit: 4
