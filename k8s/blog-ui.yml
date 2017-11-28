@@ -40,7 +40,7 @@ spec:
         - name: SPRING_PROFILES_ACTIVE
           value: cloud
         - name: JAVA_OPTS
-          value: "-Xmx311681K -Xss1M -XX:MaxMetaspaceSize=149490K -XX:ReservedCodeCacheSize=240M -XX:CompressedClassSpaceSize=24204K -XX:MaxDirectMemorySize=10M -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1"
+          value: "-Xmx304M -Xss1M -XX:MaxMetaspaceSize=145M -XX:ReservedCodeCacheSize=240M -XX:CompressedClassSpaceSize=24M -XX:MaxDirectMemorySize=10M -XX:+UnlockExperimentalVMOptions -XX:+UseCGroupMemoryLimitForHeap -XX:MaxRAMFraction=1"
         - name: SECURITY_USER_NAME
           valueFrom:
             configMapKeyRef:
