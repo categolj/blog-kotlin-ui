@@ -8,13 +8,11 @@ import am.ik.blog.point.BlogPointClient;
 public class PremiumUser implements Serializable {
 	private final String github;
 	private final String email;
-	private final BlogPointClient blogPointClient;
 	private BlogPoint lastPoint;
 
-	public PremiumUser(String github, String email, BlogPointClient blogPointClient) {
+	public PremiumUser(String github, String email) {
 		this.github = github;
 		this.email = email;
-		this.blogPointClient = blogPointClient;
 	}
 
 	public String getGithub() {
@@ -25,7 +23,7 @@ public class PremiumUser implements Serializable {
 		return email;
 	}
 
-	public BlogPoint getPoint() {
+	public BlogPoint getPoint(BlogPointClient blogPointClient) {
 		BlogPoint point = blogPointClient.getPoint();
 		if (point == BlogPoint.FAILURE && lastPoint != null) {
 			return lastPoint;

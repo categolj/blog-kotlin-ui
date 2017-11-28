@@ -1,4 +1,4 @@
-<html
+<html   xmlns:th="http://www.thymeleaf.org"
         xmlns:layout="http://www.ultraq.net.nz/web/thymeleaf/layout"
         xmlns:sec="http://www.thymeleaf.org/extras/spring-security"
         layout:decorator="layout">
@@ -24,7 +24,7 @@
         </tr>
         <tr>
             <th>Point</th>
-            <td><strong sec:authentication="principal.point.point"></strong> Pt</td>
+            <td><strong th:text="${point.point}"></strong> Pt</td>
         </tr>
     </table>
 </div>

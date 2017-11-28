@@ -1,7 +1,5 @@
 package am.ik.blog.point;
 
-import java.io.Serializable;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.security.core.AuthenticationException;
@@ -16,7 +14,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand;
 import am.ik.blog.BlogProperties;
 
 @Component
-public class BlogPointClient implements Serializable {
+public class BlogPointClient {
 	private final Logger log = LoggerFactory.getLogger(BlogPointClient.class);
 	private final OAuth2RestTemplate oauth2RestTemplate;
 	private final BlogProperties props;

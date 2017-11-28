@@ -10,8 +10,8 @@ import org.springframework.http.ResponseEntity
 import org.springframework.messaging.support.MessageBuilder
 import org.springframework.security.core.annotation.AuthenticationPrincipal
 import org.springframework.stereotype.Controller
+import org.springframework.ui.Model
 import org.springframework.web.bind.annotation.*
-import java.security.Principal
 import java.util.*
 
 @Controller
@@ -22,7 +22,8 @@ class PremiumController(val source: Source, val categoLJ3Client: CategoLJ3Client
 
 
     @GetMapping
-    fun premium(principal: Principal): String {
+    fun premium(@AuthenticationPrincipal user: PremiumUser, model: Model): String {
+        model.addAttribute("point", user.getPoint(blogPointClient))
         return "premium/index"
     }
 
