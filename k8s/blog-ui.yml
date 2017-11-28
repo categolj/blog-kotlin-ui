@@ -24,6 +24,8 @@ spec:
       maxUnavailable: 1
     type: RollingUpdate
   template:
+    annotations:
+      kubernetes.io/change-cause: "FIXME"
     metadata:
       labels:
         app: blog-ui
