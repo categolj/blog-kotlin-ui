@@ -18,6 +18,11 @@ metadata:
   name: blog-ui-deployment
 spec:
   replicas: 2
+  strategy:
+    rollingUpdate:
+      maxSurge: 1
+      maxUnavailable: 1
+    type: RollingUpdate
   template:
     metadata:
       labels:
@@ -71,11 +76,11 @@ spec:
             memory: "1024Mi"
           requests:
             memory: "1024Mi"
-        livenessProbe:
+        readinessProbe:
           httpGet:
             path: /
             port: 8080
-          initialDelaySeconds: 180
+          initialDelaySeconds: 15
           timeoutSeconds: 3
           periodSeconds: 10
           failureThreshold: 3
