@@ -459,7 +459,7 @@ jobs:
         - |
           set -e
           VERSION=`cat repo-version/number`
-          sed "s/latest/${VERSION}/g" repo/k8s/blog-ui.yml > updated/blog-ui.yml
+          sed "s/latest/${VERSION}/g" repo/k8s/blog-ui.yml | sed "s/FIXME/Bump to ${VERSION}/g" > updated/blog-ui.yml
   - put: k8s-master
     params:
       kubectl: apply -f updated/blog-ui.yml
