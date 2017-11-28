@@ -18,6 +18,7 @@ metadata:
   name: blog-ui-deployment
 spec:
   replicas: 2
+  revisionHistoryLimit: 4
   strategy:
     rollingUpdate:
       maxSurge: 1
