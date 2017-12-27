@@ -2,6 +2,7 @@ kind: Service
 apiVersion: v1
 metadata:
   name: blog-ui-service
+  namespace: blog
   labels:
     app: blog-ui
 spec:
@@ -17,6 +18,7 @@ apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
   name: blog-ui
+  namespace: blog
   labels:
     app: blog-ui
 spec:
@@ -60,22 +62,22 @@ spec:
         - name: SECURITY_OAUTH2_CLIENT_CLIENT_ID
           valueFrom:
             configMapKeyRef:
-              name: blog-config
+              name: blog-ui-config
               key: github-oauth-client-id
         - name: SECURITY_OAUTH2_CLIENT_CLIENT_SECRET
           valueFrom:
             configMapKeyRef:
-              name: blog-config
+              name: blog-ui-config
               key: github-oauth-client-secret
         - name: VCAP_APPLICATION
           valueFrom:
             configMapKeyRef:
-              name: blog-config
+              name: blog-ui-config
               key: vcap-application.json
         - name: VCAP_SERVICES
           valueFrom:
             configMapKeyRef:
-              name: blog-config
+              name: blog-ui-config
               key: vcap-services.json
         resources:
           limits:
