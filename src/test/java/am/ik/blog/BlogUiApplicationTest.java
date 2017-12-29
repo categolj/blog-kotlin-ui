@@ -68,7 +68,7 @@ public class BlogUiApplicationTest {
 	public void checkTopPage() throws Exception {
 		mockServer
 				.expect(requestTo(
-						"http://blog.example.com:80/api/entries?page=0&size=10&excludeContent=true"))
+						"http://blog-api/api/entries?page=0&size=10&excludeContent=true"))
 				.andRespond(withSuccess(entries, MediaType.APPLICATION_JSON_UTF8));
 		List<ArticleElement> articles = new TopPage(webClient, port).getArticles();
 		assertThat(articles).hasSize(2);
@@ -83,7 +83,7 @@ public class BlogUiApplicationTest {
 
 	@Test
 	public void checkEntryPage1() throws Exception {
-		mockServer.expect(requestTo("http://blog.example.com:80/api/entries/1"))
+		mockServer.expect(requestTo("http://blog-api/api/entries/1"))
 				.andRespond(withSuccess(entry1, MediaType.APPLICATION_JSON_UTF8));
 
 		ArticleElement article = new EntryPage(1, webClient, port).getArticle();
@@ -94,7 +94,7 @@ public class BlogUiApplicationTest {
 
 	@Test
 	public void checkEntryPage2() throws Exception {
-		mockServer.expect(requestTo("http://blog.example.com:80/api/entries/2"))
+		mockServer.expect(requestTo("http://blog-api/api/entries/2"))
 				.andRespond(withSuccess(entry2, MediaType.APPLICATION_JSON_UTF8));
 
 		ArticleElement article = new EntryPage(2, webClient, port).getArticle();
