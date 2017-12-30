@@ -12,7 +12,7 @@ import org.springframework.security.config.http.SessionCreationPolicy;
 @ConfigurationProperties("security")
 @Order(-5)
 public class ActuatorConfig extends WebSecurityConfigurerAdapter {
-	private User user;
+	private User user = new User();
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
