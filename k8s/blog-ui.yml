@@ -69,8 +69,26 @@ spec:
             secretKeyRef:
               name: blog-ui-secret
               key: github-oauth-client-secret
+        - name: SPRING_RABBITMQ_ADDRESSES
+          valueFrom:
+            secretKeyRef:
+              name: blog-rabbit-secret
+              key: rabbitmq-host
+        - name: SPRING_RABBITMQ_USERNAME
+          valueFrom:
+            secretKeyRef:
+              name: blog-rabbit-secret
+              key: rabbitmq-user
+        - name: SPRING_RABBITMQ_PASSWORD
+          valueFrom:
+            secretKeyRef:
+              name: blog-rabbit-secret
+              key: rabbitmq-password
         - name: SPRING_CLOUD_CONFIG_URI
-          value: http://config-server-service:8888
+          valueFrom:
+            secretKeyRef:
+              name: config-server-secret
+              key: config-server-uri
         - name: SPRING_CLOUD_CONFIG_USERNAME
           valueFrom:
             secretKeyRef:
