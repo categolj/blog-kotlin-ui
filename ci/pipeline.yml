@@ -82,13 +82,14 @@ resources:
 jobs:
 ### Dev
 - name: unit-test-develop
+  build_logs_to_retain: 5
   plan:
     - aggregate:
       - get: repo
         resource: repo-develop
         trigger: true
     - task: mvn-test
-      attempts: 5
+      attempts: 10
       privileged: true
       params:
         <<: *JAVA_OPS
@@ -280,6 +281,7 @@ jobs:
       params:
         <<: *SLACK_FAILURE
 - name: unit-test-master
+  build_logs_to_retain: 5
   plan:
   - aggregate:
     - get: repo
@@ -288,7 +290,7 @@ jobs:
       passed:
       - merge-develop-to-master
   - task: mvn-test
-    attempts: 5
+    attempts: 10
     privileged: true
     params:
       <<: *JAVA_OPS
