@@ -72,17 +72,17 @@ spec:
         - name: SPRING_RABBITMQ_ADDRESSES
           valueFrom:
             secretKeyRef:
-              name: blog-rabbit-secret
+              name: point-rabbit-secret
               key: rabbitmq-host
         - name: SPRING_RABBITMQ_USERNAME
           valueFrom:
             secretKeyRef:
-              name: blog-rabbit-secret
+              name: point-rabbit-secret
               key: rabbitmq-user
         - name: SPRING_RABBITMQ_PASSWORD
           valueFrom:
             secretKeyRef:
-              name: blog-rabbit-secret
+              name: point-rabbit-secret
               key: rabbitmq-password
         - name: SPRING_CLOUD_CONFIG_URI
           valueFrom:
