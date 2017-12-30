@@ -441,6 +441,7 @@ jobs:
         - |
           set -e
           VERSION=`cat repo-version/number`
+          DIGEST=`cat docker/digest`
           sed "s/latest/${VERSION}/g" repo/k8s/blog-ui.yml | sed "s/FIXME/Bump to ${VERSION}/g" | sed "s/INFO_DOCKER_DIGEST/${DIGEST}/g" > updated/blog-ui.yml
   - put: k8s-master
     params:
