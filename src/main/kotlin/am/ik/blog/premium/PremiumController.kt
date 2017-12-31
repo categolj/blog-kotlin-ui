@@ -31,7 +31,7 @@ class PremiumController(val source: Source, val categoLJ3Client: CategoLJ3Client
     @ResponseBody
     fun subscribe(@RequestBody point: ConsumePoint,
                   @AuthenticationPrincipal user: PremiumUser): String {
-        val (entryId, content, created, updated, frontMatter) = categoLJ3Client.findByIdExcludeContent(point.entryId!!)
+        val (_, _, _, _, frontMatter) = categoLJ3Client.findByIdExcludeContent(point.entryId!!)
         point.amount = -(frontMatter.point)!!
         point.username = user.github
         val message = MessageBuilder.withPayload(point)

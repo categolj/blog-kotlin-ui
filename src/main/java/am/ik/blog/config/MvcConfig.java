@@ -2,13 +2,13 @@ package am.ik.blog.config;
 
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.servlet.config.annotation.InterceptorRegistry;
-import org.springframework.web.servlet.config.annotation.WebMvcConfigurerAdapter;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
 
 import am.ik.blog.maintenance.MaintenanceInterceptor;
 import am.ik.blog.metrics.UserAgentMetricsInterceptor;
 
 @Configuration
-public class MvcConfig extends WebMvcConfigurerAdapter {
+public class MvcConfig implements WebMvcConfigurer {
 	private final MaintenanceInterceptor maintenanceInterceptor;
 	private final UserAgentMetricsInterceptor userAgentMetricsInterceptor;
 

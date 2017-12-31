@@ -1,5 +1,6 @@
 package am.ik.blog.config;
 
+import org.springframework.boot.actuate.autoconfigure.security.EndpointRequest;
 import org.springframework.boot.context.properties.ConfigurationProperties;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.annotation.Order;
@@ -7,6 +8,7 @@ import org.springframework.security.config.annotation.authentication.builders.Au
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
 import org.springframework.security.config.http.SessionCreationPolicy;
+import org.springframework.security.core.userdetails.UserDetails;
 
 @Configuration
 @ConfigurationProperties("security")
@@ -16,11 +18,10 @@ public class ActuatorConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-		http.regexMatcher("/health|/info|/env|/configprops|/beans|/dump|/loggers") //
+		http.requestMatcher(EndpointRequest.toAnyEndpoint()) //
 				.authorizeRequests() //
-				.mvcMatchers("/health", "/info").permitAll() //
-				.mvcMatchers("/env", "/configprops", "/beans", "/dump", "/loggers")
-				.hasRole("ACTUATOR") //
+				.requestMatchers(EndpointRequest.to("health", "info")).permitAll() //
+				.requestMatchers(EndpointRequest.toAnyEndpoint()).hasRole("ACTUATOR") //
 				.and() //
 				.httpBasic() //
 				.and() //
@@ -32,8 +33,14 @@ public class ActuatorConfig extends WebSecurityConfigurerAdapter {
 
 	@Override
 	protected void configure(AuthenticationManagerBuilder auth) throws Exception {
+		UserDetails details = org.springframework.security.core.userdetails.User
+				.withDefaultPasswordEncoder() //
+				.username(this.user.name) //
+				.password(this.user.password) //
+				.roles("ACTUATOR") //
+				.build();
 		auth.inMemoryAuthentication() //
-				.withUser(this.user.name).password(this.user.password).roles("ACTUATOR");
+				.withUser(details);
 	}
 
 	public User getUser() {

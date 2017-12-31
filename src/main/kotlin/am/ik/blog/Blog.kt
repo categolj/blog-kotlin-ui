@@ -6,7 +6,6 @@ import java.time.OffsetDateTime
 
 data class Page(
         @JsonProperty("content") val content: List<Entry>,
-        @JsonProperty("sort") val sort: Object? = null,
         @JsonProperty("totalPages") val totalPages: Long,
         @JsonProperty("totalElements") val totalElements: Long,
         @JsonProperty("isFirst") val isFirst: Boolean,
