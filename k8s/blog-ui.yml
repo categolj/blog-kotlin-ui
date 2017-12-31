@@ -84,6 +84,13 @@ spec:
             secretKeyRef:
               name: point-rabbit-secret
               key: rabbitmq-password
+        - name: SPRING_SESSION_STORE_TYPE
+          value: redis
+        - name: SPRING_REDIS_HOST
+          valueFrom:
+            secretKeyRef:
+              name: blog-redis-secret
+              key: redis-host
         - name: SPRING_CLOUD_CONFIG_URI
           valueFrom:
             secretKeyRef:
