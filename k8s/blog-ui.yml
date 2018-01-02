@@ -1,13 +1,13 @@
 kind: Service
 apiVersion: v1
 metadata:
-  name: blog-ui-service
+  name: blog-old-ui-service
   namespace: blog
   labels:
-    app: blog-ui
+    app: blog-old-ui
 spec:
   selector:
-    app: blog-ui
+    app: blog-old-ui
   ports:
   - protocol: TCP
     port: 8080
@@ -17,10 +17,10 @@ spec:
 apiVersion: extensions/v1beta1
 kind: Deployment
 metadata:
-  name: blog-ui
+  name: blog-old-ui
   namespace: blog
   labels:
-    app: blog-ui
+    app: blog-old-ui
 spec:
   replicas: 2
   revisionHistoryLimit: 4
@@ -32,12 +32,12 @@ spec:
   template:
     metadata:
       labels:
-        app: blog-ui
+        app: blog-old-ui
       annotations:
         kubernetes.io/change-cause: "FIXME"
     spec:
       containers:
-      - name: blog-ui
+      - name: blog-old-ui
         image: asia.gcr.io/fe-tmaki/blog-kotlin-ui:latest
         imagePullPolicy: Always
         ports:
