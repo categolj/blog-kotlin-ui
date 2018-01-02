@@ -219,12 +219,12 @@ jobs:
         - |
           set -e
           DIGEST=`cat docker/digest`
-          sed "s/:latest/@${DIGEST}/g" repo/k8s/blog-ui.yml | sed "s/FIXME/Bump to ${DIGEST}/g" | sed "s/INFO_DOCKER_DIGEST/${DIGEST}/g" > updated/blog-ui.yml
+          sed "s/:latest/@${DIGEST}/g" repo/k8s/blog-old-ui.yml | sed "s/FIXME/Bump to ${DIGEST}/g" | sed "s/INFO_DOCKER_DIGEST/${DIGEST}/g" > updated/blog-old-ui.yml
   - put: k8s-develop
     params:
-      kubectl: apply -f updated/blog-ui.yml
+      kubectl: apply -f updated/blog-old-ui.yml
       wait_until_ready: 120
-      wait_until_ready_selector: app=blog-ui
+      wait_until_ready_selector: app=blog-old-ui
     on_failure:
       put: slack-alert
       params:
@@ -450,12 +450,12 @@ jobs:
           set -e
           VERSION=`cat repo-version/number`
           DIGEST=`cat docker/digest`
-          sed "s/latest/${VERSION}/g" repo/k8s/blog-ui.yml | sed "s/FIXME/Bump to ${VERSION}/g" | sed "s/INFO_DOCKER_DIGEST/${DIGEST}/g" > updated/blog-ui.yml
+          sed "s/latest/${VERSION}/g" repo/k8s/blog-old-ui.yml | sed "s/FIXME/Bump to ${VERSION}/g" | sed "s/INFO_DOCKER_DIGEST/${DIGEST}/g" > updated/blog-old-ui.yml
   - put: k8s-master
     params:
-      kubectl: apply -f updated/blog-ui.yml
+      kubectl: apply -f updated/blog-old-ui.yml
       wait_until_ready: 120
-      wait_until_ready_selector: app=blog-ui
+      wait_until_ready_selector: app=blog-old-ui
     on_failure:
       put: slack-alert
       params:
