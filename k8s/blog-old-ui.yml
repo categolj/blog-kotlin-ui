@@ -22,8 +22,8 @@ metadata:
   labels:
     app: blog-old-ui
 spec:
-  replicas: 2
-  revisionHistoryLimit: 4
+  replicas: 1
+  revisionHistoryLimit: 1
   strategy:
     rollingUpdate:
       maxSurge: 1
