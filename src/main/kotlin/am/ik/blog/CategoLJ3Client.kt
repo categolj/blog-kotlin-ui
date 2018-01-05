@@ -6,10 +6,7 @@ import com.netflix.hystrix.contrib.javanica.annotation.HystrixCommand
 import com.netflix.hystrix.contrib.javanica.annotation.HystrixProperty
 import org.springframework.core.ParameterizedTypeReference
 import org.springframework.data.domain.Pageable
-import org.springframework.http.HttpEntity
-import org.springframework.http.HttpHeaders
-import org.springframework.http.HttpMethod
-import org.springframework.http.HttpStatus
+import org.springframework.http.*
 import org.springframework.security.core.AuthenticationException
 import org.springframework.security.oauth2.client.OAuth2RestTemplate
 import org.springframework.stereotype.Component
@@ -56,7 +53,10 @@ Sorry about that
                 .queryParam("size", pageable.pageSize)
                 .queryParam("excludeContent", excludeContent)
                 .build()
-        return restTemplate.exchange(uri.toUri(), HttpMethod.GET, HttpEntity.EMPTY, typeReference).body
+        val req = RequestEntity.get(uri.toUri())
+                .header(HttpHeaders.ACCEPT, MediaType.APPLICATION_JSON_VALUE)
+                .build()
+        return restTemplate.exchange(req, typeReference).body
     }
 
     @HystrixCommand(fallbackMethod = "fallbackPage")
